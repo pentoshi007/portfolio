@@ -1,0 +1,444 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon: #0fa;
+  --neon-dim: #0fa3;
+  --bg-dark: #0a0a0f;
+  --bg-darker: #050508;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: var(--bg-dark);
+  color: #c5c5c5;
+}
+
+::selection {
+  background: var(--neon);
+  color: var(--bg-dark);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon);
+  border-radius: 0;
+}
+
+.font-mono {
+  font-family: 'Fira Code', monospace;
+}
+
+.neon-text {
+  color: var(--neon);
+  text-shadow: 0 0 10px var(--neon-dim), 0 0 20px var(--neon-dim);
+}
+
+.neon-border {
+  border-color: var(--neon);
+  box-shadow: 0 0 10px var(--neon-dim), inset 0 0 10px var(--neon-dim);
+}
+
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+}
+
+.crt-flicker {
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+.terminal-box {
+  position: relative;
+  background: linear-gradient(135deg, #0a0a0f 0%, #0f0f18 100%);
+}
+
+.terminal-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 255, 170, 0.02) 1px,
+    rgba(0, 255, 170, 0.02) 2px
+  );
+  pointer-events: none;
+}
+
+.hacker-card {
+  background: linear-gradient(135deg, rgba(15, 15, 25, 0.9) 0%, rgba(10, 10, 15, 0.95) 100%);
+  border: 1px solid rgba(0, 255, 170, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.hacker-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0.5;
+}
+
+.hacker-card:hover {
+  border-color: rgba(0, 255, 170, 0.4);
+  box-shadow: 0 0 30px rgba(0, 255, 170, 0.1);
+}
+
+.skill-bar {
+  position: relative;
+  height: 4px;
+  background: rgba(0, 255, 170, 0.1);
+  overflow: hidden;
+}
+
+.skill-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--neon);
+  animation: skill-fill 2s ease-out forwards;
+}
+
+@keyframes skill-fill {
+  from { width: 0; }
+}
+
+.corner-bracket {
+  position: relative;
+}
+
+.corner-bracket::before,
+.corner-bracket::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--neon);
+  opacity: 0.5;
+}
+
+.corner-bracket::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.corner-bracket::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+.hex-badge {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background: linear-gradient(135deg, var(--neon), #0a8);
+}
+
+.typing-cursor::after {
+  content: '_';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s ease;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+.data-stream {
+  position: relative;
+}
+
+.data-stream::before {
+  content: '01001010 ';
+  position: absolute;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(0, 255, 170, 0.1);
+  white-space: nowrap;
+  animation: stream 20s linear infinite;
+}
+
+@keyframes stream {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::before {
+  content: '// ';
+  color: var(--neon);
+  opacity: 0.6;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: var(--neon);
+}
+
+.nav-link {
+  position: relative;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--neon);
+}
+
+.nav-link::before {
+  content: '>';
+  position: absolute;
+  left: -15px;
+  opacity: 0;
+  color: var(--neon);
+  transition: opacity 0.3s, transform 0.3s;
+  transform: translateX(-5px);
+}
+
+.nav-link:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--neon);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 170, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(0, 255, 170, 0); }
+}
+
+.timeline-line {
+  position: relative;
+}
+
+.timeline-line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--neon), transparent);
+}
+
+.tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(0, 255, 170, 0.08);
+  border: 1px solid rgba(0, 255, 170, 0.2);
+  color: var(--neon);
+  transition: all 0.3s;
+}
+
+.tag:hover {
+  background: rgba(0, 255, 170, 0.15);
+  border-color: var(--neon);
+}
+
+input, textarea {
+  font-family: 'Fira Code', monospace;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--neon) !important;
+  box-shadow: 0 0 0 1px var(--neon);
+}
+
+.scanline-effect {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  animation: scanline-move 8s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes scanline-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+}
+
+.vignette-effect {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 70%,
+    rgba(10, 10, 15, 0.3) 100%
+  );
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+.glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 255, 170, 0.2), 0 0 10px rgba(0, 255, 170, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.4), 0 0 30px rgba(0, 255, 170, 0.2);
+  }
+}
