@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Share2, Link2, Check, Twitter, Linkedin, Facebook, MessageCircle } from 'lucide-react';
 
 interface ShareButtonsProps {
@@ -11,6 +11,38 @@ interface ShareButtonsProps {
 export default function ShareButtons({ title, url }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen]);
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -55,22 +87,21 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-xs group"
         aria-label="Share this post"
+        aria-expanded={isOpen}
       >
         <Share2 className="w-4 h-4" />
         <span className="hidden sm:inline">share</span>
       </button>
 
       {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={() => setIsOpen(false)}
-          />
-
-          <div className="absolute right-0 top-8 z-50 bg-[#0a0a0f] border border-[#0fa]/20 rounded-lg shadow-xl p-3 min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200">
+        <div
+          ref={dropdownRef}
+          className="absolute right-0 top-8 z-[100] bg-[#0a0a0f] border border-[#0fa]/20 rounded-lg shadow-xl p-3 min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200"
+        >
             <div className="text-[#0fa] font-mono text-xs mb-3 flex items-center gap-2">
               <span className="text-gray-500">$</span> share_post
             </div>
@@ -103,7 +134,6 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
               </a>
             ))}
           </div>
-        </>
       )}
     </div>
   );
