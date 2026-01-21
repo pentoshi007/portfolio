@@ -3,6 +3,10 @@ import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { isAuthenticated } from '@/lib/auth';
 
+// Disable caching for this API route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // GET - Fetch all blogs (public only shows published, admin sees all)
 export async function GET(request: NextRequest) {
   try {
@@ -12,7 +16,9 @@ export async function GET(request: NextRequest) {
     const query = authenticated ? {} : { published: true };
     const blogs = await Blog.find(query).sort({ createdAt: -1 });
     
-    return NextResponse.json(blogs);
+    const response = NextResponse.json(blogs);
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return response;
   } catch (error) {
     console.error('Error fetching blogs:', error);
     return NextResponse.json({ error: 'Failed to fetch blogs' }, { status: 500 });

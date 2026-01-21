@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, Share2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
+import MarkdownContent from './MarkdownContent';
 
 // Disable caching - always fetch fresh data from database
 export const dynamic = 'force-dynamic';
@@ -72,11 +73,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         </header>
 
-        <div className="prose prose-invert prose-green max-w-none">
-          <div className="text-gray-300 leading-relaxed whitespace-pre-wrap font-sans">
-            {blogData.body}
-          </div>
-        </div>
+        <MarkdownContent content={blogData.body} />
       </article>
 
       <footer className="border-t border-[#0fa]/10 py-8">

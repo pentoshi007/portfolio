@@ -3,6 +3,10 @@ import dbConnect from '@/lib/mongodb';
 import Message from '@/models/Message';
 import { isAuthenticated } from '@/lib/auth';
 
+// Disable caching for this API route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // GET - Fetch all messages (admin only)
 export async function GET(request: NextRequest) {
   const authenticated = await isAuthenticated();
@@ -13,7 +17,9 @@ export async function GET(request: NextRequest) {
   try {
     await dbConnect();
     const messages = await Message.find({}).sort({ createdAt: -1 });
-    return NextResponse.json(messages);
+    const response = NextResponse.json(messages);
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return response;
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
   }
