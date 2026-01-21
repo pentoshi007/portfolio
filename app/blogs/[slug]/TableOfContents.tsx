@@ -109,11 +109,11 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
       </button>
 
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0a0a0f]/98 border-l border-[#0fa]/20 z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-[73px] right-0 h-[calc(100vh-73px)] w-80 max-w-[85vw] bg-[#0a0a0f]/98 border-l border-[#0fa]/20 z-[5] transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="h-full flex flex-col pt-20 pb-6 px-4">
+        <div className="h-full flex flex-col pt-6 pb-6 px-4">
           <div className="flex items-center gap-2 mb-6 text-[#0fa] font-mono text-sm">
             <span className="text-gray-500">$</span> table_of_contents
           </div>
