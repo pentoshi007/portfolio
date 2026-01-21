@@ -1,49 +1,54 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-
 export default function proxy(request: NextRequest) {
-  const host = request.headers.get('host') || '';
-  const pathname = request.nextUrl.pathname;
-  const domain = process.env.NEXT_PUBLIC_DOMAIN || 'aniketpandey.website';
+  const url = request.nextUrl;
+  const hostname = request.headers.get('host') || '';
+  
+  // Define domains
+  const mainDomain = 'aniketpandey.website';
+  const adminDomain = `admin.${mainDomain}`;
+  const blogsDomain = `blogs.${mainDomain}`;
 
-  // 1. Skip system paths (Crucial for assets, images, and internal Next.js calls)
+  // 1. SKIP STATIC/SYSTEM PATHS
+  // This is CRITICAL to prevent 404s on CSS/JS/Images
   if (
-    pathname.startsWith('/_next') || 
-    pathname.startsWith('/api') || 
-    pathname.startsWith('/static') ||
-    pathname.includes('.') // Skip files (favicon.ico, robots.txt, etc.)
+    url.pathname.startsWith('/_next') || 
+    url.pathname.startsWith('/api') || 
+    url.pathname.startsWith('/static') || 
+    url.pathname.includes('.')
   ) {
     return NextResponse.next();
   }
 
-  // 2. Handle Main Domain PATH to SUBDOMAIN redirects
-  // This ensures aniketpandey.website/blogs -> blogs.aniketpandey.website
-  if (host === domain || host.includes('localhost') || host.includes('vercel.app')) {
-    if (pathname.startsWith('/admin')) {
-      return NextResponse.redirect(new URL(`https://admin.${domain}${pathname.replace('/admin', '')}`, request.url));
+  // 2. MAIN DOMAIN -> SUBDOMAIN REDIRECTS
+  // If user visits aniketpandey.website/admin -> redirect to admin.aniketpandey.website
+  if (hostname === mainDomain || hostname.includes('localhost') || hostname.includes('vercel.app')) {
+    if (url.pathname.startsWith('/admin')) {
+      const newUrl = new URL(url.toString());
+      newUrl.hostname = adminDomain;
+      newUrl.pathname = url.pathname.replace('/admin', ''); 
+      return NextResponse.redirect(newUrl);
     }
-    if (pathname.startsWith('/blogs')) {
-      return NextResponse.redirect(new URL(`https://blogs.${domain}${pathname.replace('/blogs', '')}`, request.url));
+    if (url.pathname.startsWith('/blogs')) {
+      const newUrl = new URL(url.toString());
+      newUrl.hostname = blogsDomain;
+      newUrl.pathname = url.pathname.replace('/blogs', '');
+      return NextResponse.redirect(newUrl);
     }
   }
 
-  // 2. Handle admin subdomain routing (REWRITE instead of REDIRECT)
-  if (host.startsWith('admin.')) {
-    // If accessing root or any path, rewrite to /admin/...
-    // But don't rewrite if it's already starting with /admin to avoid double prefix
-    if (!pathname.startsWith('/admin')) {
-      return NextResponse.rewrite(new URL(`/admin${pathname === '/' ? '' : pathname}`, request.url));
+  // 3. SUBDOMAIN ROUTING (REWRITES)
+  // If user is on admin.aniketpandey.website -> rewrite to /admin folder
+  if (hostname.startsWith('admin.')) {
+    // Only rewrite if we aren't already targeting /admin to prevent infinite loops
+    if (!url.pathname.startsWith('/admin')) {
+      return NextResponse.rewrite(new URL(`/admin${url.pathname}`, request.url));
     }
-    return NextResponse.next();
   }
 
-  // 3. Handle blogs subdomain routing (REWRITE instead of REDIRECT)
-  if (host.startsWith('blogs.')) {
-    // If accessing root or any path, rewrite to /blogs/...
-    if (!pathname.startsWith('/blogs')) {
-      return NextResponse.rewrite(new URL(`/blogs${pathname === '/' ? '' : pathname}`, request.url));
+  // If user is on blogs.aniketpandey.website -> rewrite to /blogs folder
+  if (hostname.startsWith('blogs.')) {
+    if (!url.pathname.startsWith('/blogs')) {
+      return NextResponse.rewrite(new URL(`/blogs${url.pathname}`, request.url));
     }
-    return NextResponse.next();
   }
 
   return NextResponse.next();
