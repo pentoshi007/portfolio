@@ -147,8 +147,8 @@ export function validateMessageInput(input: any): ValidationResult<MessageInput>
   // Name validation
   if (!input.name || typeof input.name !== 'string') {
     errors.push('Name is required');
-  } else if (input.name.length < 2) {
-    errors.push('Name must be at least 2 characters');
+  } else if (input.name.trim().length < 1) {
+    errors.push('Name is required');
   } else if (input.name.length > 100) {
     errors.push('Name must be less than 100 characters');
   }
@@ -163,8 +163,8 @@ export function validateMessageInput(input: any): ValidationResult<MessageInput>
   // Message validation
   if (!input.message || typeof input.message !== 'string') {
     errors.push('Message is required');
-  } else if (input.message.length < 10) {
-    errors.push('Message must be at least 10 characters');
+  } else if (input.message.trim().length < 1) {
+    errors.push('Message is required');
   } else if (input.message.length > 5000) {
     errors.push('Message must be less than 5,000 characters');
   }
