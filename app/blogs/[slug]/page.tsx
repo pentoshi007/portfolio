@@ -4,6 +4,10 @@ import { notFound } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 
+// Disable caching - always fetch fresh data from database
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface PageProps {
   params: { slug: string };
 }

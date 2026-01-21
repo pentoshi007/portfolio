@@ -3,6 +3,10 @@ import { ArrowLeft, Calendar, ArrowUpRight } from 'lucide-react';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 
+// Disable caching - always fetch fresh data from database
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface BlogData {
   _id: string;
   title: string;
