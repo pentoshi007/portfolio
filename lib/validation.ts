@@ -60,13 +60,13 @@ export interface BlogInput {
   published?: boolean;
 }
 
-export interface ValidationResult {
+export interface ValidationResult<T = unknown> {
   valid: boolean;
   errors: string[];
-  sanitized?: BlogInput;
+  sanitized?: T;
 }
 
-export function validateBlogInput(input: any): ValidationResult {
+export function validateBlogInput(input: any): ValidationResult<BlogInput> {
   const errors: string[] = [];
 
   if (!input || typeof input !== 'object') {
@@ -137,7 +137,7 @@ export interface MessageInput {
   message: string;
 }
 
-export function validateMessageInput(input: any): ValidationResult & { sanitized?: MessageInput } {
+export function validateMessageInput(input: any): ValidationResult<MessageInput> {
   const errors: string[] = [];
 
   if (!input || typeof input !== 'object') {
