@@ -41,6 +41,11 @@ export default function proxy(request: NextRequest) {
   // 3. SUBDOMAIN ROUTING (REWRITES)
   // If user is on admin.aniketpandey.website -> rewrite to /admin folder
   if (hostname.startsWith('admin.')) {
+    // SPECIAL CASE: 'login' on subdomain should map to '/admin/login' internally
+    if (url.pathname === '/login') {
+      return NextResponse.rewrite(new URL('/admin/login', request.url));
+    }
+    
     // Only rewrite if we aren't already targeting /admin to prevent infinite loops
     if (!url.pathname.startsWith('/admin')) {
       return NextResponse.rewrite(new URL(`/admin${url.pathname}`, request.url));
