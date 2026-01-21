@@ -31,10 +31,10 @@ export default async function BlogsPage() {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm mb-2">
+              <a href="https://aniketpandey.website" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm mb-2">
                 <ArrowLeft className="w-4 h-4" />
                 back to portfolio
-              </Link>
+              </a>
               <h1 className="text-3xl font-bold text-white">
                 <span className="text-[#0fa]">//</span> blog
               </h1>

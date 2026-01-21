@@ -81,9 +81,9 @@ export default async function BlogPostPage({ params }: PageProps) {
             <Link href="/blogs" className="text-gray-500 hover:text-[#0fa] font-mono text-sm transition-colors">
               ← more posts
             </Link>
-            <Link href="/" className="text-gray-500 hover:text-[#0fa] font-mono text-sm transition-colors">
+            <a href="https://aniketpandey.website" className="text-gray-500 hover:text-[#0fa] font-mono text-sm transition-colors">
               portfolio →
-            </Link>
+            </a>
           </div>
         </div>
       </footer>
