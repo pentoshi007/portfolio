@@ -44,12 +44,6 @@ export default function Footer() {
             <span>ANIKET_PANDEY.EXE</span>
           </div>
 
-          <div className="flex items-center gap-4 text-gray-700">
-            <span className="hover:text-[#0fa] cursor-pointer transition-colors">PRIVACY_POLICY</span>
-            <span className="text-[#0fa]/20">/</span>
-            <span className="hover:text-[#0fa] cursor-pointer transition-colors">TERMS_OF_SERVICE</span>
-          </div>
-
           <div className="text-gray-600 italic">
             // all systems operational.
           </div>
