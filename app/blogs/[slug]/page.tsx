@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const blogTitle = (blog as any).title;
   const blogCoverImage = (blog as any).coverImage;
-  const blogUrl = `https://aniketpandey.website/blogs/${slug}`;
+  const blogUrl = `https://blogs.aniketpandey.website/${slug}`;
   
   const description = (blog as any).body
     .replace(/```[\s\S]*?```/g, '')
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           ]
         : [
             {
-              url: 'https://aniketpandey.website/og-default.png',
+              url: 'https://blogs.aniketpandey.website/og-default.png',
               width: 1200,
               height: 630,
               alt: blogTitle,
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: blogTitle,
       description,
-      images: blogCoverImage ? [blogCoverImage] : ['https://aniketpandey.website/og-default.png'],
+      images: blogCoverImage ? [blogCoverImage] : ['https://blogs.aniketpandey.website/og-default.png'],
       creator: '@thelunatic_ak_',
     },
   };
@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     updatedAt: (blog as any).updatedAt.toISOString(),
   } as unknown as BlogData;
 
-  const blogUrl = `https://aniketpandey.website/blogs/${slug}`;
+  const blogUrl = `https://blogs.aniketpandey.website/${slug}`;
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
