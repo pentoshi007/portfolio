@@ -139,14 +139,11 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         <header className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{blogData.title}</h1>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-gray-500 font-mono text-xs">
-              <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
-                {new Date(blogData.createdAt).toLocaleDateString()}
-              </span>
-            </div>
-            <ShareButtons title={blogData.title} url={blogUrl} />
+          <div className="flex items-center gap-4 text-gray-500 font-mono text-xs">
+            <span className="flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {new Date(blogData.createdAt).toLocaleDateString()}
+            </span>
           </div>
         </header>
 
