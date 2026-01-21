@@ -30,7 +30,7 @@ interface BlogData {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   await dbConnect();
-  const blog = await Blog.findOne({ slug, published: true }).select('title body coverImage').lean();
+  const blog = await Blog.findOne({ slug, published: true }).select('title body coverImage createdAt updatedAt').lean();
   
   if (!blog) {
     return { title: 'Blog Not Found' };
@@ -39,8 +39,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const blogTitle = (blog as any).title;
   const blogCoverImage = (blog as any).coverImage;
   const blogUrl = `https://blogs.aniketpandey.website/${slug}`;
+  const createdAt = (blog as any).createdAt;
+  const updatedAt = (blog as any).updatedAt;
   
-  const description = (blog as any).body
+  const plainText = (blog as any).body
     .replace(/```[\s\S]*?```/g, '')
     .replace(/`[^`]+`/g, '')
     .replace(/^#{1,6}\s+/gm, '')
@@ -50,19 +52,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
     .replace(/\n+/g, ' ')
     .replace(/\s+/g, ' ')
-    .trim()
-    .substring(0, 160);
+    .trim();
+
+  const description = plainText.substring(0, 160);
+
+  const words = plainText.toLowerCase().split(/\s+/);
+  const wordFreq: Record<string, number> = {};
+  const stopWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'shall', 'can', 'need', 'dare', 'ought', 'used', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'what', 'which', 'who', 'whom', 'whose', 'where', 'when', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 'just', 'also', 'now', 'here', 'there', 'then', 'once', 'if', 'as', 'its', 'about', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 'under', 'again', 'further', 'while', 'use', 'using', 'well', 'like', 'new', 'one', 'two', 'first', 'get', 'make']);
+  
+  words.forEach((word: string) => {
+    if (word.length > 3 && !stopWords.has(word) && !/^\d+$/.test(word)) {
+      wordFreq[word] = (wordFreq[word] || 0) + 1;
+    }
+  });
+  
+  const keywords = Object.entries(wordFreq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map((entry) => entry[0]);
+
+  const allKeywords = [
+    'Aniket Pandey',
+    blogTitle,
+    ...keywords,
+  ];
 
   return {
     title: `${blogTitle} | Aniket Pandey`,
     description,
+    keywords: allKeywords,
     authors: [{ name: 'Aniket Pandey' }],
+    creator: 'Aniket Pandey',
+    publisher: 'Aniket Pandey',
     openGraph: {
       type: 'article',
       title: blogTitle,
       description,
       url: blogUrl,
       siteName: 'Aniket Pandey Blog',
+      publishedTime: createdAt ? new Date(createdAt).toISOString() : undefined,
+      modifiedTime: updatedAt ? new Date(updatedAt).toISOString() : undefined,
+      authors: ['Aniket Pandey'],
       images: blogCoverImage
         ? [
             {
@@ -89,6 +119,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: blogCoverImage ? [blogCoverImage] : ['https://blogs.aniketpandey.website/og-default.png'],
       creator: '@thelunatic_ak_',
     },
+    alternates: {
+      canonical: blogUrl,
+    },
   };
 }
 
@@ -111,8 +144,37 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const blogUrl = `https://blogs.aniketpandey.website/${slug}`;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: blogData.title,
+    image: blogData.coverImage || 'https://blogs.aniketpandey.website/og-default.png',
+    datePublished: blogData.createdAt,
+    dateModified: blogData.updatedAt,
+    author: {
+      '@type': 'Person',
+      name: 'Aniket Pandey',
+      url: 'https://aniketpandey.website',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Aniket Pandey',
+      url: 'https://aniketpandey.website',
+    },
+    url: blogUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': blogUrl,
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-[#0a0a0f]">
       <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95 sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">
@@ -162,6 +224,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

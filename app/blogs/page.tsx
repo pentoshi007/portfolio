@@ -3,6 +3,54 @@ import Image from 'next/image';
 import { Calendar, ArrowUpRight, ExternalLink } from 'lucide-react';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog | Aniket Pandey',
+  description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, MERN stack tutorials, security research, and programming insights.',
+  keywords: [
+    'Aniket Pandey',
+    'Aniket Pandey blog',
+    'Aniket Pandey website',
+    'cybersecurity blog',
+    'penetration testing tutorials',
+    'web development blog',
+    'MERN stack tutorials',
+    'security research',
+    'ethical hacking',
+    'full stack developer blog',
+    'programming tutorials',
+    'tech blog India',
+  ],
+  authors: [{ name: 'Aniket Pandey' }],
+  creator: 'Aniket Pandey',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://blogs.aniketpandey.website',
+    siteName: 'Aniket Pandey Blog',
+    title: 'Blog | Aniket Pandey - Cybersecurity & Web Development',
+    description: 'Technical blog covering cybersecurity, penetration testing, web development tutorials, and security research by Aniket Pandey.',
+    images: [
+      {
+        url: 'https://blogs.aniketpandey.website/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Aniket Pandey Blog',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Aniket Pandey',
+    description: 'Technical blog covering cybersecurity, penetration testing, and web development.',
+    creator: '@thelunatic_ak_',
+    images: ['https://blogs.aniketpandey.website/og-default.png'],
+  },
+  alternates: {
+    canonical: 'https://blogs.aniketpandey.website',
+  },
+};
 
 // Disable caching - always fetch fresh data from database
 export const dynamic = 'force-dynamic';
