@@ -8,20 +8,47 @@ interface MarkdownContentProps {
   content: string;
 }
 
+function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+function extractText(children: React.ReactNode): string {
+  if (typeof children === 'string') return children;
+  if (Array.isArray(children)) return children.map(extractText).join('');
+  if (children && typeof children === 'object' && 'props' in children) {
+    const element = children as { props?: { children?: React.ReactNode } };
+    return extractText(element.props?.children);
+  }
+  return '';
+}
+
 export default function MarkdownContent({ content }: MarkdownContentProps) {
   const components: Components = {
-    h1: ({ children }) => (
-      <h1 className="text-3xl font-bold text-white mt-8 mb-4">{children}</h1>
-    ),
-    h2: ({ children }) => (
-      <h2 className="text-2xl font-bold text-[#0fa] mt-8 mb-4 border-b border-[#0fa]/20 pb-2">{children}</h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="text-xl font-semibold text-white mt-6 mb-3">{children}</h3>
-    ),
-    h4: ({ children }) => (
-      <h4 className="text-lg font-semibold text-gray-200 mt-4 mb-2">{children}</h4>
-    ),
+    h1: ({ children }) => {
+      const text = extractText(children);
+      const id = generateSlug(text);
+      return <h1 id={id} className="text-3xl font-bold text-white mt-8 mb-4 scroll-mt-24">{children}</h1>;
+    },
+    h2: ({ children }) => {
+      const text = extractText(children);
+      const id = generateSlug(text);
+      return <h2 id={id} className="text-2xl font-bold text-[#0fa] mt-8 mb-4 border-b border-[#0fa]/20 pb-2 scroll-mt-24">{children}</h2>;
+    },
+    h3: ({ children }) => {
+      const text = extractText(children);
+      const id = generateSlug(text);
+      return <h3 id={id} className="text-xl font-semibold text-white mt-6 mb-3 scroll-mt-24">{children}</h3>;
+    },
+    h4: ({ children }) => {
+      const text = extractText(children);
+      const id = generateSlug(text);
+      return <h4 id={id} className="text-lg font-semibold text-gray-200 mt-4 mb-2 scroll-mt-24">{children}</h4>;
+    },
     p: ({ children }) => (
       <p className="text-gray-300 leading-relaxed my-4">{children}</p>
     ),

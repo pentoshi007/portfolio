@@ -6,6 +6,7 @@ import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import MarkdownContent from './MarkdownContent';
 import ShareButtons from './ShareButtons';
+import TableOfContents from './TableOfContents';
 import { Metadata } from 'next';
 
 // Disable caching - always fetch fresh data from database
@@ -211,6 +212,8 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         <MarkdownContent content={blogData.body} />
       </article>
+
+      <TableOfContents content={blogData.body} />
 
       <footer className="border-t border-[#0fa]/10 py-8">
         <div className="max-w-3xl mx-auto px-4">
