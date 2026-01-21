@@ -4,33 +4,36 @@ import type { NextRequest } from 'next/server';
 export default function proxy(request: NextRequest) {
   const host = request.headers.get('host') || '';
   const pathname = request.nextUrl.pathname;
+  const domain = process.env.NEXT_PUBLIC_DOMAIN || 'aniketpandey.website';
 
-  // Handle admin subdomain
-  if (host.startsWith('admin.')) {
-    // If accessing root of admin subdomain, redirect to /admin
-    if (pathname === '/') {
-      return NextResponse.redirect(new URL('/admin', request.url));
-    }
-    // If accessing /admin paths, allow through
+  // 1. Handle Main Domain PATH to SUBDOMAIN redirects
+  // This ensures aniketpandey.website/blogs -> blogs.aniketpandey.website
+  if (host === domain || host.includes('localhost') || host.includes('vercel.app')) {
     if (pathname.startsWith('/admin')) {
-      return NextResponse.next();
+      return NextResponse.redirect(new URL(`https://admin.${domain}${pathname.replace('/admin', '')}`, request.url));
     }
-    // Rewrite other paths to /admin prefix
-    return NextResponse.rewrite(new URL(`/admin${pathname}`, request.url));
+    if (pathname.startsWith('/blogs')) {
+      return NextResponse.redirect(new URL(`https://blogs.${domain}${pathname.replace('/blogs', '')}`, request.url));
+    }
   }
 
-  // Handle blogs subdomain
+  // 2. Handle admin subdomain routing (REWRITE instead of REDIRECT)
+  if (host.startsWith('admin.')) {
+    // If accessing root or any path, rewrite to /admin/...
+    // But don't rewrite if it's already starting with /admin to avoid double prefix
+    if (!pathname.startsWith('/admin')) {
+      return NextResponse.rewrite(new URL(`/admin${pathname === '/' ? '' : pathname}`, request.url));
+    }
+    return NextResponse.next();
+  }
+
+  // 3. Handle blogs subdomain routing (REWRITE instead of REDIRECT)
   if (host.startsWith('blogs.')) {
-    // If accessing root of blogs subdomain, redirect to /blogs
-    if (pathname === '/') {
-      return NextResponse.redirect(new URL('/blogs', request.url));
+    // If accessing root or any path, rewrite to /blogs/...
+    if (!pathname.startsWith('/blogs')) {
+      return NextResponse.rewrite(new URL(`/blogs${pathname === '/' ? '' : pathname}`, request.url));
     }
-    // If accessing /blogs paths, allow through
-    if (pathname.startsWith('/blogs')) {
-      return NextResponse.next();
-    }
-    // Rewrite other paths to /blogs prefix
-    return NextResponse.rewrite(new URL(`/blogs${pathname}`, request.url));
+    return NextResponse.next();
   }
 
   return NextResponse.next();
@@ -38,14 +41,6 @@ export default function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     * - api routes (handled separately)
-     */
     '/((?!_next/static|_next/image|favicon.ico|api).*)',
   ],
 };
