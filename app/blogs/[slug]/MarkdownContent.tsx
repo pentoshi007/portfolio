@@ -53,7 +53,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
       <p className="text-gray-300 leading-relaxed my-4">{children}</p>
     ),
     a: ({ href, children }) => (
-      <a href={href} className="text-[#0fa] hover:underline" target="_blank" rel="noopener noreferrer">
+      <a href={href} className="text-[#0fa] hover:underline break-all" target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     ),
@@ -114,7 +114,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
   };
 
   return (
-    <div className="markdown-content">
+    <div className="markdown-content overflow-x-hidden">
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
         {content}
       </ReactMarkdown>
