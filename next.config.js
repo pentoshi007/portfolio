@@ -19,6 +19,9 @@ const nextConfig = {
     // Optimize production builds
     productionBrowserSourceMaps: false,
     
+    // Enable Turbopack (Next.js 16 default)
+    turbopack: {},
+    
     // Security headers
     async headers() {
         return [
@@ -76,20 +79,6 @@ const nextConfig = {
                 ]
             }
         ];
-    },
-
-    // Optimize webpack
-    webpack: (config, { isServer }) => {
-        // Reduce bundle size
-        if (!isServer) {
-            config.resolve.fallback = {
-                ...config.resolve.fallback,
-                fs: false,
-                net: false,
-                tls: false,
-            };
-        }
-        return config;
     },
 };
 
