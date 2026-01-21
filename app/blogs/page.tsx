@@ -118,7 +118,7 @@ export default async function BlogsPage() {
     <div className="min-h-screen bg-[#0a0a0f]">
       <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h1 className="text-3xl font-bold text-white">
                 <span className="text-[#0fa]">//</span> blog
@@ -127,7 +127,7 @@ export default async function BlogsPage() {
             </div>
             <a 
               href="https://aniketpandey.website" 
-              className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm"
+              className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm w-fit"
             >
               portfolio
               <ExternalLink className="w-4 h-4" />
