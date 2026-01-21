@@ -6,7 +6,17 @@ export default function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const domain = process.env.NEXT_PUBLIC_DOMAIN || 'aniketpandey.website';
 
-  // 1. Handle Main Domain PATH to SUBDOMAIN redirects
+  // 1. Skip system paths (Crucial for assets, images, and internal Next.js calls)
+  if (
+    pathname.startsWith('/_next') || 
+    pathname.startsWith('/api') || 
+    pathname.startsWith('/static') ||
+    pathname.includes('.') // Skip files (favicon.ico, robots.txt, etc.)
+  ) {
+    return NextResponse.next();
+  }
+
+  // 2. Handle Main Domain PATH to SUBDOMAIN redirects
   // This ensures aniketpandey.website/blogs -> blogs.aniketpandey.website
   if (host === domain || host.includes('localhost') || host.includes('vercel.app')) {
     if (pathname.startsWith('/admin')) {
