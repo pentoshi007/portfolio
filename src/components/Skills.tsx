@@ -45,8 +45,8 @@ export default function Skills() {
   const { elementRef: gridRef, isVisible: gridVisible } = useScrollAnimation();
 
   return (
-    <section id="skills" className="py-24 px-4 md:px-8 bg-[#080810]">
-      <div className="max-w-5xl mx-auto">
+    <section id="skills" className="py-24 px-4 md:px-8 bg-[#080810]/95">
+      <div className="max-w-6xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">arsenal</h2>
           <p className="text-gray-500 font-mono text-sm mt-4">/* tools of the trade */</p>

@@ -8,14 +8,14 @@ export default function Certifications() {
   const { elementRef: highlightRef, isVisible: highlightVisible } = useScrollAnimation();
 
   return (
-    <section id="certifications" className="py-24 px-4 md:px-8 bg-[#0a0a0f]">
+    <section id="certifications" className="py-16 px-4 md:px-8 bg-transparent">
       <div className="max-w-5xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">certs</h2>
           <p className="text-gray-500 font-mono text-sm mt-4">/* verified skills */</p>
         </div>
 
-        <div ref={gridRef as React.RefObject<HTMLDivElement>} className="grid md:grid-cols-2 gap-4 mb-8">
+        <div ref={gridRef as React.RefObject<HTMLDivElement>} className="grid md:grid-cols-2 gap-4 mb-6">
           {certifications.map((cert, index) => (
             <a
               key={index}
@@ -46,34 +46,56 @@ export default function Certifications() {
           ))}
         </div>
 
-        <div ref={highlightRef as React.RefObject<HTMLDivElement>} className={`hacker-card p-6 corner-bracket ${highlightVisible ? 'slide-up glow-pulse' : 'opacity-0'}`}>
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="flex-shrink-0">
-              <div className="relative">
-                <div className="w-24 h-24 flex items-center justify-center bg-[#0fa]/10">
-                  <Shield className="w-12 h-12 text-[#0fa]" />
+        <a 
+          ref={highlightRef as React.RefObject<HTMLAnchorElement>}
+          href="https://tryhackme.com/p/aniket00736" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className={`block group ${highlightVisible ? 'slide-up' : 'opacity-0'}`}
+        >
+          <div className="relative overflow-hidden border border-[#0fa]/30 bg-gradient-to-r from-[#0fa]/5 via-[#0fa]/10 to-[#0fa]/5 hover:border-[#0fa]/60 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0fa]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            
+            <div className="relative p-6 md:p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                <div className="relative">
+                  <div className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center bg-[#0fa]/10 border border-[#0fa]/20 group-hover:border-[#0fa]/40 transition-colors">
+                    <Shield className="w-10 h-10 md:w-12 md:h-12 text-[#0fa]" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 px-2 py-1 bg-[#0fa] text-[#0a0a0f] font-mono text-[10px] font-bold shadow-lg shadow-[#0fa]/20">
+                    TOP 2%
+                  </div>
                 </div>
-                <div className="absolute -top-1 -right-1 px-2 py-0.5 bg-[#0fa] text-[#0a0a0f] font-mono text-[10px] font-bold">
-                  TOP 2%
+                
+                <div className="flex-1 text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                    <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-[#0fa] transition-colors">TryHackMe Guru</h3>
+                    <ExternalLink className="w-4 h-4 text-[#0fa] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="text-gray-400 text-sm leading-relaxed max-w-xl">
+                    Completed <span className="text-[#0fa] font-semibold">180+ challenges</span> spanning web exploitation,
+                    privilege escalation, network security, and red team operations.
+                  </p>
+                  
+                  <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0fa]/10 border border-[#0fa]/20">
+                      <span className="text-[#0fa] font-mono text-sm font-bold">180+</span>
+                      <span className="text-gray-500 font-mono text-xs">rooms</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0fa]/10 border border-[#0fa]/20">
+                      <span className="text-[#0fa] font-mono text-sm font-bold">CTF</span>
+                      <span className="text-gray-500 font-mono text-xs">player</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0fa]/10 border border-[#0fa]/20">
+                      <span className="text-[#0fa] font-mono text-sm font-bold">Red Team</span>
+                      <span className="text-gray-500 font-mono text-xs">ops</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white mb-2">TryHackMe Elite</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Ranked in the <span className="text-[#0fa]">top 2%</span> globally.
-                Completed <span className="text-[#0fa]">150+ challenges</span> spanning web exploitation,
-                privilege escalation, network security, and red team operations.
-                Not just learning - actively hunting vulnerabilities and pwning boxes.
-              </p>
-              <div className="flex gap-4 mt-4 font-mono text-xs text-gray-500">
-                <span><span className="text-[#0fa]">90%</span> pentest labs</span>
-                <span><span className="text-[#0fa]">150+</span> rooms</span>
-                <span><span className="text-[#0fa]">CTF</span> player</span>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </section>
   );

@@ -8,14 +8,14 @@ export default function About() {
   const { elementRef: eduRef, isVisible: eduVisible } = useScrollAnimation();
 
   return (
-    <section id="about" className="py-24 px-4 md:px-8 bg-[#0a0a0f]">
-      <div className="max-w-5xl mx-auto">
+    <section id="about" className="py-24 px-4 md:px-8 bg-transparent">
+      <div className="max-w-7xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">whoami</h2>
           <p className="text-gray-500 font-mono text-sm mt-4">/* quick overview */</p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-12">
+        <div className="grid lg:grid-cols-5 gap-8">
           <div ref={contentRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-3 space-y-6 ${contentVisible ? 'slide-up' : 'opacity-0'}`}>
             <p className="text-gray-300 text-lg leading-relaxed">
               Security researcher by curiosity, developer by profession. I spend my days
@@ -34,7 +34,7 @@ export default function About() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { num: '4+', label: 'apps shipped' },
-                  { num: '150+', label: 'CTF solves' },
+                  { num: '180+', label: 'CTF solves' },
                   { num: 'Top 2%', label: 'TryHackMe' },
                   { num: '75%', label: 'time saved' },
                 ].map((stat) => (

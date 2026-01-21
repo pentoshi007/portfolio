@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -15,14 +14,8 @@ import GridBackground from './components/GridBackground';
 import HexGrid from './components/HexGrid';
 
 export default function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   return (
-    <div className={`min-h-screen bg-[#0a0a0f] relative ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
+    <div className="min-h-screen bg-[#0a0a0f] relative fade-in">
       <GridBackground />
       <HexGrid />
       <MatrixRain />
@@ -44,3 +37,4 @@ export default function App() {
     </div>
   );
 }
+

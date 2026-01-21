@@ -4,17 +4,17 @@ export const personalInfo = {
   email: 'aniket00736@gmail.com',
   linkedin: 'https://linkedin.com/in/aniket00736',
   github: 'https://github.com/pentoshi007',
-  summary: `Full-stack web developer and cybersecurity analyst with hands-on experience in MERN stack development, penetration testing, and threat intelligence. Built and deployed 4+ production-ready web applications with secure authentication and RESTful APIs. Finished 150+ cybersecurity challenges ranking in top 2% on TryHackMe.`,
+  summary: `Full-stack web developer and cybersecurity analyst with hands-on experience in MERN stack development, penetration testing, and threat intelligence. Built and deployed 4+ production-ready web applications with secure authentication and RESTful APIs. Finished 180+ cybersecurity challenges ranking in top 2% on TryHackMe.`,
 };
 
 export const skills = {
-  frontend: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Responsive Design'],
-  backend: ['Node.js', 'Express.js', 'Flask', 'RESTful APIs', 'JWT Authentication', 'Cloud Technologies'],
-  databases: ['MongoDB', 'Mongoose', 'PostgreSQL', 'Supabase', 'MongoDB Atlas'],
+  frontend: ['React', 'Next.js', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Responsive Design', 'Redux'],
+  backend: ['Node.js', 'Express.js', 'Flask', 'FastAPI', 'RESTful APIs', 'GraphQL', 'JWT Authentication', 'WebSockets', 'Cloud Technologies'],
+  databases: ['MongoDB', 'Mongoose', 'PostgreSQL', 'MySQL', 'Redis', 'Supabase', 'MongoDB Atlas', 'Prisma ORM'],
   programming: ['Python', 'JavaScript', 'TypeScript', 'C/C++', 'SQL'],
-  cybersecurity: ['Penetration Testing', 'Vulnerability Assessment', 'OSINT', 'Web Application Security', 'Threat Analysis'],
-  securityTools: ['Burp Suite', 'Metasploit', 'Nmap', 'Hydra', 'Wireshark', 'Netcat', 'Gobuster'],
-  devops: ['Git', 'GitHub', 'Vercel', 'Render', 'Docker', 'CI/CD'],
+  cybersecurity: ['Penetration Testing', 'Vulnerability Assessment', 'OSINT', 'Web Application Security', 'Threat Analysis', 'Network Security', 'Privilege Escalation', 'CTF Challenges'],
+  securityTools: ['Burp Suite', 'Metasploit', 'Nmap', 'Hydra', 'Wireshark', 'Netcat', 'Gobuster', 'SQLMap', 'Hashcat', 'John the Ripper', 'Nikto', 'Dirb'],
+  devops: ['Git', 'GitHub', 'Vercel', 'Render', 'Docker', 'CI/CD', 'Linux', 'Nginx', 'AWS'],
 };
 
 export const experience = [
@@ -60,16 +60,16 @@ export const education = [
 
 export const projects = [
   {
-    title: 'Oh-My-Security (OMS)',
-    subtitle: 'Automated Cybersecurity Education Platform',
-    tech: ['Next.js', 'TypeScript', 'Supabase', 'Google Gemini AI'],
-    description: 'Engineered automated cybersecurity education platform delivering daily AI-generated attack analysis.',
+    title: 'HTTP Smuggler',
+    subtitle: 'Security Testing Tool',
+    tech: ['Python', 'AsyncIO', 'HTTP/2', 'Security Testing'],
+    description: 'Advanced tool for detecting HTTP Request Smuggling vulnerabilities including CL.TE and TE.CL.',
     highlights: [
-      'Implemented Vercel cron automation processing 35+ attack methodologies',
-      'newsdata.io API integration with 99.9% uptime',
+      'Implemented detection logic for CL.TE and TE.CL desync attacks',
+      'Built with AsyncIO for high-performance concurrent scanning',
+      'Custom HTTP client implementation to bypass standard library protections',
     ],
-    github: 'https://github.com/pentoshi007',
-    live: 'https://oh-my-security-web.vercel.app/',
+    github: 'https://github.com/pentoshi007/http-smuggler',
   },
   {
     title: 'T-Finder',
@@ -85,6 +85,44 @@ export const projects = [
     live: 'https://t-finder-ani.vercel.app/',
   },
   {
+    title: 'Vortex',
+    subtitle: 'Cyber Threat Intelligence Dashboard',
+    tech: ['React', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'TailwindCSS'],
+    description: 'Full-stack CTI platform for tracking, analyzing, and enriching Indicators of Compromise (IOCs).',
+    highlights: [
+      'IOC management with auto-ingestion from URLHaus threat feeds',
+      'VirusTotal & AbuseIPDB integration for threat enrichment',
+      'Role-based access control with JWT authentication and CSV/JSON exports',
+    ],
+    github: 'https://github.com/pentoshi007/vortex',
+    live: 'https://vortex-cti.vercel.app/',
+  },
+  {
+    title: 'Eventinity',
+    subtitle: 'Event Discovery & Registration Platform',
+    tech: ['React', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'TailwindCSS'],
+    description: 'Full-stack web app for event discovery, search, and registration with admin tooling.',
+    highlights: [
+      'JWT authentication with role-based access for users and admins',
+      'Real-time registration tracking with capacity management',
+      'Modern glassmorphism UI with responsive design and smooth animations',
+    ],
+    github: 'https://github.com/pentoshi007/event-registration',
+    live: 'https://eventinity.vercel.app/',
+  },
+  {
+    title: 'Oh-My-Security (OMS)',
+    subtitle: 'Automated Cybersecurity Education Platform',
+    tech: ['Next.js', 'TypeScript', 'Supabase', 'Google Gemini AI'],
+    description: 'Engineered automated cybersecurity education platform delivering daily AI-generated attack analysis.',
+    highlights: [
+      'Implemented Vercel cron automation processing 35+ attack methodologies',
+      'newsdata.io API integration with 99.9% uptime',
+    ],
+    github: 'https://github.com/pentoshi007',
+    live: 'https://oh-my-security-web.vercel.app/',
+  },
+  {
     title: 'ViTGPTNET',
     subtitle: 'Medical Report Generation',
     tech: ['Python', 'TensorFlow', 'Deep Learning', 'Vision Transformer', 'GPT-2'],
@@ -97,7 +135,22 @@ export const projects = [
   },
 ];
 
+
 export const certifications = [
+  {
+    name: 'Web Application Pentesting',
+    issuer: 'TryHackMe',
+    date: 'Jan 2026',
+    description: 'Comprehensive web application penetration testing covering OWASP Top 10, SQL injection, XSS, and authentication bypasses.',
+    link: 'https://tryhackme.com/certificate/THM-OITJNUE8SG',
+  },
+  {
+    name: 'SQL (Advanced)',
+    issuer: 'HackerRank',
+    date: 'Oct 2025',
+    description: 'Advanced SQL proficiency including complex queries, window functions, CTEs, and database optimization techniques.',
+    link: 'https://www.hackerrank.com/certificates/5c8bcb068cd3',
+  },
   {
     name: 'Jr Penetration Tester',
     issuer: 'TryHackMe',

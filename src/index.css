@@ -1,8 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-dark-900: #0a0a0f;
+  --color-dark-800: #12121a;
+  --color-dark-700: #1a1a25;
+  --color-dark-600: #242430;
+
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-typing: typing 3.5s steps(40, end);
+  --animate-blink: blink 1s step-end infinite;
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-slide-up: slideUp 0.6s ease-out forwards;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  @keyframes blink {
+    50% { borderColor: transparent; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    from { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+    to { box-shadow: 0 0 40px rgba(6, 182, 212, 0.6); }
+  }
+}
 
 :root {
   --neon: #0fa;
@@ -342,8 +383,7 @@ input:focus, textarea:focus {
 }
 
 .fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-  opacity: 0;
+  animation: fadeIn 0.6s ease-out;
 }
 
 @keyframes fadeIn {
@@ -357,8 +397,6 @@ input:focus, textarea:focus {
 
 .slide-up {
   animation: slideUp 0.6s ease-out forwards;
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 @keyframes slideUp {
@@ -441,4 +479,8 @@ input:focus, textarea:focus {
   50% {
     box-shadow: 0 0 20px rgba(0, 255, 170, 0.4), 0 0 30px rgba(0, 255, 170, 0.2);
   }
+}
+
+.transition-max-height {
+  transition: max-height 0.5s ease-in-out;
 }

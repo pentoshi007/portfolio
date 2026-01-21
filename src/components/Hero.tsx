@@ -17,7 +17,7 @@ const typingLines = [
   '> ./achievements --list',
   '[+] 4+ production apps deployed',
   '[+] Top 2% on TryHackMe',
-  '[+] 150+ CTF challenges pwned',
+  '[+] 180+ CTF challenges pwned',
   '[+] 20+ secure API endpoints built',
 ];
 
@@ -55,7 +55,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-[#0a0a0f]" />
+      <div className="absolute inset-0 bg-[#0a0a0f]/70" />
 
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -64,14 +64,14 @@ export default function Hero() {
         }} />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 pt-20">
-        <div className="mb-8">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 pt-20 flex flex-col items-center text-center">
+        <div className="mb-8 w-full max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#0fa]/30 bg-[#0fa]/5 mb-6">
             <div className="status-dot" />
             <span className="font-mono text-xs text-[#0fa]">SYSTEM ONLINE</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
             <span className="text-white">I'm </span>
             <GlitchText text="Aniket" className="neon-text" />
           </h1>
@@ -83,7 +83,7 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="terminal-box rounded-none mb-8 max-w-2xl">
+        <div className="terminal-box rounded-none mb-8 w-full max-w-3xl text-left">
           <div className="flex items-center gap-2 px-4 py-2 border-b border-[#0fa]/20 bg-[#0fa]/5">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />

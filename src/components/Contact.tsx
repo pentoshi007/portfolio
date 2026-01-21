@@ -16,9 +16,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 md:px-8 bg-[#080810]">
+    <section id="contact" className="py-16 px-4 md:px-8 bg-[#080810]/95">
       <div className="max-w-4xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">ping</h2>
           <p className="text-gray-500 font-mono text-sm mt-4">/* let's connect */</p>
         </div>
