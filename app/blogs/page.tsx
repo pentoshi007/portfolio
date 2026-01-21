@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Calendar, ArrowUpRight, ExternalLink } from 'lucide-react';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { Metadata } from 'next';
+import ProgressiveImage from '@/components/ProgressiveImage';
 
 export const metadata: Metadata = {
   title: 'Blog | Aniket Pandey',
@@ -152,13 +152,12 @@ export default async function BlogsPage() {
               >
                 {blog.coverImage && (
                   <div className="mb-4 overflow-hidden relative h-48">
-                    <Image
+                    <ProgressiveImage
                       src={blog.coverImage}
                       alt={blog.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 768px"
                       className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                      loading="lazy"
                     />
                   </div>
                 )}

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
@@ -7,6 +6,7 @@ import Blog from '@/models/Blog';
 import MarkdownContent from './MarkdownContent';
 import ShareButtons from './ShareButtons';
 import TableOfContents from './TableOfContents';
+import ProgressiveImage from '@/components/ProgressiveImage';
 import { Metadata } from 'next';
 
 // Disable caching - always fetch fresh data from database
@@ -42,6 +42,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const blogUrl = `https://blogs.aniketpandey.website/${slug}`;
   const createdAt = (blog as any).createdAt;
   const updatedAt = (blog as any).updatedAt;
+  
+  const ogImageUrl = blogCoverImage 
+    ? `https://blogs.aniketpandey.website/api/og-image?url=${encodeURIComponent(blogCoverImage)}`
+    : 'https://blogs.aniketpandey.website/og-default.png';
   
   const plainText = (blog as any).body
     .replace(/```[\s\S]*?```/g, '')
@@ -94,30 +98,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       publishedTime: createdAt ? new Date(createdAt).toISOString() : undefined,
       modifiedTime: updatedAt ? new Date(updatedAt).toISOString() : undefined,
       authors: ['Aniket Pandey'],
-      images: blogCoverImage
-        ? [
-            {
-              url: blogCoverImage,
-              width: 1200,
-              height: 630,
-              alt: blogTitle,
-            },
-          ]
-        : [
-            {
-              url: 'https://blogs.aniketpandey.website/og-default.png',
-              width: 1200,
-              height: 630,
-              alt: blogTitle,
-            },
-          ],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: blogTitle,
+        },
+      ],
       locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
       title: blogTitle,
       description,
-      images: blogCoverImage ? [blogCoverImage] : ['https://blogs.aniketpandey.website/og-default.png'],
+      images: [ogImageUrl],
       creator: '@thelunatic_ak_',
     },
     alternates: {
@@ -189,7 +184,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <article className="max-w-3xl mx-auto px-4 py-12">
         {blogData.coverImage && (
           <div className="mb-8 overflow-hidden border border-[#0fa]/20 relative h-64 md:h-96">
-            <Image
+            <ProgressiveImage
               src={blogData.coverImage}
               alt={blogData.title}
               fill
