@@ -7,6 +7,7 @@ import Skills from '@/components/Skills';
 import Experience from '@/components/Experience';
 import Projects from '@/components/Projects';
 import Certifications from '@/components/Certifications';
+import Stats from '@/components/Stats';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import MatrixRain from '@/components/MatrixRain';
@@ -32,6 +33,7 @@ export default function Home() {
           <Experience />
           <Projects />
           <Certifications />
+          <Stats />
           <Contact />
         </main>
         <Footer />

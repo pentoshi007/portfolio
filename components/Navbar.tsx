@@ -9,6 +9,7 @@ const navItems = [
   { label: 'ops', href: '#experience' },
   { label: 'projects', href: '#projects' },
   { label: 'certs', href: '#certifications' },
+  { label: 'stats', href: '#stats' },
   { label: 'ping', href: '#contact' },
   { label: 'blogs', href: '/blogs' },
 ];

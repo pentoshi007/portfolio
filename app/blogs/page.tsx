@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     'full stack developer blog',
     'programming tutorials',
     'tech blog India',
+    'claude opus 4.5 free',
+    'claude antigravity',
+    'oh-my-opencode',
+    'claude antigravity proxy',
   ],
   authors: [{ name: 'Aniket Pandey' }],
   creator: 'Aniket Pandey',
@@ -121,7 +125,7 @@ export default async function BlogsPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h1 className="text-3xl font-bold text-white">
-                <span className="text-[#0fa]">//</span> blog
+                <span className="text-[#0fa]">//</span> blogs
               </h1>
               <p className="text-gray-500 font-mono text-sm mt-1">thoughts, tutorials, and security findings</p>
             </div>
