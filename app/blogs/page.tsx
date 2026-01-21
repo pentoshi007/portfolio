@@ -96,7 +96,7 @@ export default async function BlogsPage() {
             {publishedBlogs.map((blog: BlogData) => (
               <Link
                 key={blog._id}
-                href={`/blogs/${blog.slug}`}
+                href={`/${blog.slug}`}
                 className="block hacker-card p-6 group hover:border-[#0fa]/40 transition-all"
               >
                 {blog.coverImage && (

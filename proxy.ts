@@ -150,6 +150,13 @@ export default function middleware(request: NextRequest) {
 
   // Blogs subdomain routing
   if (hostname.startsWith('blogs.')) {
+    // If someone hits blogs.<domain>/blogs/*, redirect to the canonical path without /blogs
+    if (pathname === '/blogs' || pathname.startsWith('/blogs/')) {
+      const newUrl = new URL(url.toString());
+      newUrl.pathname = pathname.replace(/^\/blogs/, '') || '/';
+      return NextResponse.redirect(newUrl, 308);
+    }
+
     if (!pathname.startsWith('/blogs')) {
       return NextResponse.rewrite(new URL(`/blogs${pathname}`, request.url));
     }

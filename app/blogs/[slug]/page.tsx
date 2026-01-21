@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     <div className="min-h-screen bg-[#0a0a0f]">
       <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95 sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-6">
-          <Link href="/blogs" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">
+          <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">
             <ArrowLeft className="w-4 h-4" />
             back to blogs
           </Link>
@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <footer className="border-t border-[#0fa]/10 py-8">
         <div className="max-w-3xl mx-auto px-4">
           <div className="flex items-center justify-between">
-            <Link href="/blogs" className="text-gray-500 hover:text-[#0fa] font-mono text-sm transition-colors">
+            <Link href="/" className="text-gray-500 hover:text-[#0fa] font-mono text-sm transition-colors">
               ← more posts
             </Link>
             <a href="https://aniketpandey.website" className="text-gray-500 hover:text-[#0fa] font-mono text-sm transition-colors">
