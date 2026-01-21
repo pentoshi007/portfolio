@@ -79,6 +79,17 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
+  useEffect(() => {
+    if (isOpen && window.innerWidth < 1024) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (headings.length === 0) return null;
 
   const scrollToHeading = (id: string) => {
@@ -109,16 +120,16 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
       </button>
 
       <div
-        className={`fixed top-[73px] right-0 h-[calc(100vh-73px)] w-80 max-w-[85vw] bg-[#0a0a0f]/98 border-l border-[#0fa]/20 z-[5] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-[73px] right-0 h-[calc(100vh-73px)] w-80 max-w-[85vw] bg-[#0a0a0f] border-l border-[#0fa]/20 z-40 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="h-full flex flex-col pt-6 pb-6 px-4">
+        <div className="h-full flex flex-col pt-6 pb-6 px-4 overflow-hidden">
           <div className="flex items-center gap-2 mb-6 text-[#0fa] font-mono text-sm">
             <span className="text-gray-500">$</span> table_of_contents
           </div>
 
-          <nav className="flex-1 overflow-y-auto pr-2 scrollbar-thin">
+          <nav className="flex-1 overflow-y-auto overscroll-contain pr-2 scrollbar-thin touch-pan-y">
             <ul className="space-y-1">
               {headings.map((heading, index) => (
                 <li key={`${heading.id}-${index}`}>
@@ -147,6 +158,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
         <div
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
           onClick={() => setIsOpen(false)}
+          aria-hidden="true"
         />
       )}
     </>
