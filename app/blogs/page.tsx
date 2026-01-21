@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Calendar, ArrowUpRight } from 'lucide-react';
+import { Calendar, ArrowUpRight, ExternalLink } from 'lucide-react';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 
@@ -72,15 +72,18 @@ export default async function BlogsPage() {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <a href="https://aniketpandey.website" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm mb-2">
-                <ArrowLeft className="w-4 h-4" />
-                back to portfolio
-              </a>
               <h1 className="text-3xl font-bold text-white">
                 <span className="text-[#0fa]">//</span> blog
               </h1>
               <p className="text-gray-500 font-mono text-sm mt-1">thoughts, tutorials, and security findings</p>
             </div>
+            <a 
+              href="https://aniketpandey.website" 
+              className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm"
+            >
+              portfolio
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </header>

@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Calendar, Share2 } from 'lucide-react';
+import { ArrowLeft, Calendar } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import MarkdownContent from './MarkdownContent';
+import ShareButtons from './ShareButtons';
 import { Metadata } from 'next';
 
 // Disable caching - always fetch fresh data from database
@@ -26,7 +27,6 @@ interface BlogData {
   updatedAt: string;
 }
 
-// Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   await dbConnect();
@@ -36,17 +36,58 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Blog Not Found' };
   }
 
+  const blogTitle = (blog as any).title;
+  const blogCoverImage = (blog as any).coverImage;
+  const blogUrl = `https://aniketpandey.website/blogs/${slug}`;
+  
   const description = (blog as any).body
-    .replace(/[#*`_\[\]]/g, '')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`[^`]+`/g, '')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
+    .replace(/\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
     .substring(0, 160);
 
   return {
-    title: `${(blog as any).title} | Aniket Pandey`,
+    title: `${blogTitle} | Aniket Pandey`,
     description,
+    authors: [{ name: 'Aniket Pandey' }],
     openGraph: {
-      title: (blog as any).title,
+      type: 'article',
+      title: blogTitle,
       description,
-      images: (blog as any).coverImage ? [(blog as any).coverImage] : [],
+      url: blogUrl,
+      siteName: 'Aniket Pandey Blog',
+      images: blogCoverImage
+        ? [
+            {
+              url: blogCoverImage,
+              width: 1200,
+              height: 630,
+              alt: blogTitle,
+            },
+          ]
+        : [
+            {
+              url: 'https://aniketpandey.website/og-default.png',
+              width: 1200,
+              height: 630,
+              alt: blogTitle,
+            },
+          ],
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: blogTitle,
+      description,
+      images: blogCoverImage ? [blogCoverImage] : ['https://aniketpandey.website/og-default.png'],
+      creator: '@thelunatic_ak_',
     },
   };
 }
@@ -68,14 +109,17 @@ export default async function BlogPostPage({ params }: PageProps) {
     updatedAt: (blog as any).updatedAt.toISOString(),
   } as unknown as BlogData;
 
+  const blogUrl = `https://aniketpandey.website/blogs/${slug}`;
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95 sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 py-6">
+        <div className="max-w-3xl mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">
             <ArrowLeft className="w-4 h-4" />
             back to blogs
           </Link>
+          <ShareButtons title={blogData.title} url={blogUrl} />
         </div>
       </header>
 
@@ -95,11 +139,14 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         <header className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{blogData.title}</h1>
-          <div className="flex items-center gap-4 text-gray-500 font-mono text-xs">
-            <span className="flex items-center gap-1">
-              <Calendar className="w-3 h-3" />
-              {new Date(blogData.createdAt).toLocaleDateString()}
-            </span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4 text-gray-500 font-mono text-xs">
+              <span className="flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
+                {new Date(blogData.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+            <ShareButtons title={blogData.title} url={blogUrl} />
           </div>
         </header>
 
