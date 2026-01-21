@@ -19,7 +19,11 @@ interface BlogData {
 
 export default async function BlogsPage() {
   await dbConnect();
-  const blogs = await Blog.find({ published: true }).sort({ createdAt: -1 }).lean();
+  // Only fetch fields needed for the listing page (not full body)
+  const blogs = await Blog.find({ published: true })
+    .select('_id title slug body coverImage createdAt')
+    .sort({ createdAt: -1 })
+    .lean();
   
   // Convert MongoDB documents to plain objects for the component
   const publishedBlogs = blogs.map(b => ({
