@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Message from '@/models/Message';
 import { isAuthenticated } from '@/lib/auth';
+import { validateMessageInput } from '@/lib/validation';
 
 // Disable caching for this API route
 export const dynamic = 'force-dynamic';
@@ -16,7 +17,9 @@ export async function GET(request: NextRequest) {
 
   try {
     await dbConnect();
-    const messages = await Message.find({}).sort({ createdAt: -1 });
+    const messages = await Message.find({})
+      .sort({ createdAt: -1 })
+      .lean();
     const response = NextResponse.json(messages);
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     return response;
@@ -29,13 +32,22 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     await dbConnect();
-    const body = await request.json();
     
-    const { name, email, message } = body;
-    
-    if (!name || !email || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
+
+    // Validate and sanitize input
+    const validation = validateMessageInput(body);
+    
+    if (!validation.valid) {
+      return NextResponse.json({ error: validation.errors.join(', ') }, { status: 400 });
+    }
+
+    const { name, email, message } = validation.sanitized!;
 
     const newMessage = await Message.create({
       name,
@@ -45,6 +57,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, id: newMessage._id }, { status: 201 });
   } catch (error) {
+    console.error('Error saving message:', error);
     return NextResponse.json({ error: 'Failed to save message' }, { status: 500 });
   }
 }

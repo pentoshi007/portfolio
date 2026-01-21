@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Calendar, ArrowUpRight } from 'lucide-react';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
@@ -15,6 +16,38 @@ interface BlogData {
   coverImage?: string;
   published: boolean;
   createdAt: string;
+}
+
+// Strip markdown formatting and get plain text preview
+function getPlainTextPreview(markdown: string, maxLength: number = 180): string {
+  return markdown
+    // Remove code blocks
+    .replace(/```[\s\S]*?```/g, '')
+    // Remove inline code
+    .replace(/`[^`]+`/g, '')
+    // Remove headers
+    .replace(/^#{1,6}\s+/gm, '')
+    // Remove bold/italic
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    .replace(/_([^_]+)_/g, '$1')
+    // Remove links but keep text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    // Remove images
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
+    // Remove blockquotes
+    .replace(/^>\s+/gm, '')
+    // Remove horizontal rules
+    .replace(/^[-*_]{3,}$/gm, '')
+    // Remove list markers
+    .replace(/^[\s]*[-*+]\s+/gm, '')
+    .replace(/^[\s]*\d+\.\s+/gm, '')
+    // Remove extra whitespace
+    .replace(/\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .substring(0, maxLength);
 }
 
 export default async function BlogsPage() {
@@ -60,18 +93,21 @@ export default async function BlogsPage() {
           </div>
         ) : (
           <div className="space-y-6">
-            {publishedBlogs.map((blog: any) => (
+            {publishedBlogs.map((blog: BlogData) => (
               <Link
                 key={blog._id}
                 href={`/blogs/${blog.slug}`}
                 className="block hacker-card p-6 group hover:border-[#0fa]/40 transition-all"
               >
                 {blog.coverImage && (
-                  <div className="mb-4 overflow-hidden">
-                    <img
+                  <div className="mb-4 overflow-hidden relative h-48">
+                    <Image
                       src={blog.coverImage}
                       alt={blog.title}
-                      className="w-full h-48 object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 768px"
+                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                      loading="lazy"
                     />
                   </div>
                 )}
@@ -82,7 +118,7 @@ export default async function BlogsPage() {
                       <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h2>
                     <p className="text-gray-400 text-sm mt-2 line-clamp-2">
-                      {blog.body.substring(0, 200)}...
+                      {getPlainTextPreview(blog.body)}...
                     </p>
                   </div>
                 </div>

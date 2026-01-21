@@ -1,16 +1,18 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Calendar, Share2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import MarkdownContent from './MarkdownContent';
+import { Metadata } from 'next';
 
 // Disable caching - always fetch fresh data from database
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 interface BlogData {
@@ -22,6 +24,31 @@ interface BlogData {
   published: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  await dbConnect();
+  const blog = await Blog.findOne({ slug, published: true }).select('title body coverImage').lean();
+  
+  if (!blog) {
+    return { title: 'Blog Not Found' };
+  }
+
+  const description = (blog as any).body
+    .replace(/[#*`_\[\]]/g, '')
+    .substring(0, 160);
+
+  return {
+    title: `${(blog as any).title} | Aniket Pandey`,
+    description,
+    openGraph: {
+      title: (blog as any).title,
+      description,
+      images: (blog as any).coverImage ? [(blog as any).coverImage] : [],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
@@ -43,7 +70,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95">
+      <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95 sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-6">
           <Link href="/blogs" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">
             <ArrowLeft className="w-4 h-4" />
@@ -54,11 +81,14 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       <article className="max-w-3xl mx-auto px-4 py-12">
         {blogData.coverImage && (
-          <div className="mb-8 overflow-hidden border border-[#0fa]/20">
-            <img
+          <div className="mb-8 overflow-hidden border border-[#0fa]/20 relative h-64 md:h-96">
+            <Image
               src={blogData.coverImage}
               alt={blogData.title}
-              className="w-full h-64 md:h-96 object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover"
+              priority
             />
           </div>
         )}

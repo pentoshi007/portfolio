@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { isAuthenticated } from '@/lib/auth';
+import { validateBlogInput } from '@/lib/validation';
 
 // Disable caching for this API route
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,9 @@ export async function GET(request: NextRequest) {
     const authenticated = await isAuthenticated();
     
     const query = authenticated ? {} : { published: true };
-    const blogs = await Blog.find(query).sort({ createdAt: -1 });
+    const blogs = await Blog.find(query)
+      .sort({ createdAt: -1 })
+      .lean();
     
     const response = NextResponse.json(blogs);
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -34,13 +37,28 @@ export async function POST(request: NextRequest) {
 
   try {
     await dbConnect();
-    const body = await request.json();
     
-    const { title, body: blogBody, coverImage, images, published } = body;
-    
-    if (!title || !blogBody) {
-      return NextResponse.json({ error: 'Title and body are required' }, { status: 400 });
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
+
+    // Validate and sanitize input
+    const validation = validateBlogInput({
+      title: body.title,
+      body: body.body,
+      coverImage: body.coverImage,
+      images: body.images,
+      published: body.published,
+    });
+
+    if (!validation.valid) {
+      return NextResponse.json({ error: validation.errors.join(', ') }, { status: 400 });
+    }
+
+    const { title, body: blogBody, coverImage, images, published } = validation.sanitized!;
 
     const slug = title
       .toLowerCase()
@@ -60,11 +78,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(newBlog, { status: 201 });
   } catch (error: any) {
     console.error('Error creating blog:', error);
+    // Don't expose internal errors in production
     return NextResponse.json({ 
-      error: 'Failed to create blog', 
-      message: error?.message || 'Unknown error',
-      name: error?.name,
-      stack: process.env.NODE_ENV === 'development' ? error?.stack : undefined
+      error: 'Failed to create blog',
     }, { status: 500 });
   }
 }
