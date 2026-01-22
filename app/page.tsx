@@ -1,5 +1,3 @@
-'use client';
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -10,19 +8,15 @@ import Certifications from '@/components/Certifications';
 import Stats from '@/components/Stats';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import MatrixRain from '@/components/MatrixRain';
-import FloatingParticles from '@/components/FloatingParticles';
 import ScanlineEffect from '@/components/ScanlineEffect';
 import GridBackground from '@/components/GridBackground';
-import HexGrid from '@/components/HexGrid';
+import VisualEffects from '@/components/VisualEffects';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] relative fade-in">
       <GridBackground />
-      <HexGrid />
-      <MatrixRain />
-      <FloatingParticles />
+      <VisualEffects />
       <ScanlineEffect />
       <div className="relative z-10">
         <Navbar />

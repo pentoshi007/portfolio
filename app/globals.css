@@ -58,7 +58,7 @@
 }
 
 body {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
   background-color: var(--bg-dark);
   color: #c5c5c5;
 }
@@ -82,7 +82,7 @@ body {
 }
 
 .font-mono {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-fira-code), 'Fira Code', monospace;
 }
 
 .neon-text {
@@ -291,7 +291,7 @@ body {
 .data-stream::before {
   content: '01001010 ';
   position: absolute;
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-fira-code), 'Fira Code', monospace;
   font-size: 10px;
   color: rgba(0, 255, 170, 0.1);
   white-space: nowrap;
@@ -377,7 +377,7 @@ body {
 }
 
 .tag {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-fira-code), 'Fira Code', monospace;
   font-size: 11px;
   padding: 4px 10px;
   background: rgba(0, 255, 170, 0.08);
@@ -392,7 +392,7 @@ body {
 }
 
 input, textarea {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-fira-code), 'Fira Code', monospace;
 }
 
 input:focus, textarea:focus {

@@ -1,5 +1,20 @@
 import type { Metadata, Viewport } from 'next';
+import { Fira_Code, Space_Grotesk } from 'next/font/google';
 import './globals.css';
+
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-fira-code',
+  weight: ['400', '500', '600'],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-space-grotesk',
+  weight: ['400', '500', '600', '700'],
+});
 
 export const metadata: Metadata = {
   title: {
@@ -46,16 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-      </head>
+    <html lang="en" className={`${firaCode.variable} ${spaceGrotesk.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   );
