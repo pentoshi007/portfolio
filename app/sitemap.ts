@@ -1,29 +1,26 @@
 import { MetadataRoute } from 'next';
-import dbConnect from '@/lib/mongodb';
-import Blog from '@/models/Blog';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://blogs.aniketpandey.website';
+// Main portfolio sitemap - for aniketpandey.website
+// Blog sitemap is at /blogs/sitemap.xml for blogs.aniketpandey.website
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://aniketpandey.website';
 
-  await dbConnect();
-  const blogs = await Blog.find({ published: true })
-    .select('slug updatedAt')
-    .lean();
-
-  const blogEntries = blogs.map((blog: any) => ({
-    url: `${baseUrl}/${blog.slug}`,
-    lastModified: new Date(blog.updatedAt),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }));
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    ...blogEntries,
+  // Main portfolio sections
+  const sections = [
+    { path: '', priority: 1.0 },
+    { path: '#about', priority: 0.8 },
+    { path: '#skills', priority: 0.7 },
+    { path: '#experience', priority: 0.8 },
+    { path: '#projects', priority: 0.8 },
+    { path: '#certifications', priority: 0.7 },
+    { path: '#stats', priority: 0.6 },
+    { path: '#contact', priority: 0.7 },
   ];
+
+  return sections.map((section) => ({
+    url: `${baseUrl}/${section.path}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: section.priority,
+  }));
 }
