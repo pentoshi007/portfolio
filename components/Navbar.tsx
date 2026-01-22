@@ -38,7 +38,7 @@ export default function Navbar() {
             </div>
           </a>
 
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 ml-auto">
             {navItems.map((item, i) => (
               <a
                 key={item.label}
