@@ -36,6 +36,8 @@ export default function Stats() {
               <img 
                 src="https://ghchart.rshah.org/00ff99/pentoshi007"
                 alt="GitHub Contributions"
+                width={722}
+                height={112}
                 className="w-full min-w-[650px]"
                 loading="lazy"
               />

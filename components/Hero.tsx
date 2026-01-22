@@ -1,60 +1,9 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
 import { personalInfo } from '@/data/portfolioData';
 import GlitchText from './GlitchText';
-
-const typingLines = [
-  '> initializing system...',
-  '> loading modules: [react, nextjs, node, nmap, burp]',
-  '> establishing secure connection...',
-  '> access granted.',
-  '',
-  '> cat /etc/profile',
-  'ROLE="Full-Stack Developer + Security Analyst"',
-  'LOCATION="New Delhi, India"',
-  'STATUS="Available for opportunities"',
-  '',
-  '> ./achievements --list',
-  '[+] 6+ production apps deployed',
-  '[+] Top 2% on TryHackMe',
-  '[+] 180+ CTF challenges pwned',
-  '[+] 20+ secure API endpoints built',
-];
+import TerminalAnimation from './TerminalAnimation';
 
 export default function Hero() {
-  const [displayedLines, setDisplayedLines] = useState<string[]>([]);
-  const [currentLine, setCurrentLine] = useState(0);
-  const [currentChar, setCurrentChar] = useState(0);
-
-  useEffect(() => {
-    if (currentLine >= typingLines.length) return;
-
-    const line = typingLines[currentLine];
-
-    if (currentChar < line.length) {
-      const timeout = setTimeout(() => {
-        setCurrentChar(prev => prev + 1);
-      }, line.startsWith('>') ? 15 : 8);
-      return () => clearTimeout(timeout);
-    } else {
-      const timeout = setTimeout(() => {
-        setDisplayedLines(prev => [...prev, line]);
-        setCurrentLine(prev => prev + 1);
-        setCurrentChar(0);
-      }, line === '' ? 100 : 150);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentLine, currentChar]);
-
-  const getLineStyle = (line: string) => {
-    if (line.startsWith('>')) return 'text-[#0fa]';
-    if (line.startsWith('[+]')) return 'text-emerald-400';
-    if (line.includes('=')) return 'text-amber-400';
-    return 'text-gray-400';
-  };
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-[#0a0a0f]/70" />
@@ -74,7 +23,7 @@ export default function Hero() {
           </div>
 
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
-            <span className="text-white">I'm </span>
+            <span className="text-white">I&apos;m </span>
             <GlitchText text="Aniket" className="neon-text" />
           </h1>
 
@@ -94,25 +43,7 @@ export default function Hero() {
             </div>
             <span className="ml-2 font-mono text-[10px] text-[#0fa]/50">aniket@kali:~/portfolio</span>
           </div>
-
-          <div className="p-4 font-mono text-xs md:text-sm h-[280px] overflow-hidden">
-            {displayedLines.map((line, i) => (
-              <div key={i} className={`${getLineStyle(line)} ${line === '' ? 'h-3' : ''}`}>
-                {line}
-              </div>
-            ))}
-            {currentLine < typingLines.length && (
-              <div className={getLineStyle(typingLines[currentLine])}>
-                {typingLines[currentLine].slice(0, currentChar)}
-                <span className="inline-block w-2 h-4 bg-[#0fa] ml-0.5 animate-pulse" />
-              </div>
-            )}
-            {currentLine >= typingLines.length && (
-              <div className="text-[#0fa] mt-2">
-                {'>'} <span className="inline-block w-2 h-4 bg-[#0fa] animate-pulse" />
-              </div>
-            )}
-          </div>
+          <TerminalAnimation />
         </div>
 
         <div className="flex flex-wrap gap-3 mb-12">
