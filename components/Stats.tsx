@@ -55,15 +55,16 @@ export default function Stats() {
               <div className="ml-auto status-dot" />
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 w-full sm:w-auto overflow-hidden">
                 <iframe 
                   src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=3110287" 
                   width="320"
                   height="100"
                   frameBorder="0"
                   loading="lazy"
-                  className="rounded"
-                  style={{ border: 'none' }}
+                  scrolling="no"
+                  className="rounded max-w-full"
+                  style={{ border: 'none', overflow: 'hidden' }}
                   title="TryHackMe Badge"
                 />
               </div>
@@ -75,7 +76,7 @@ export default function Stats() {
                   href="https://tryhackme.com/p/aniket00736" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="font-mono text-xs text-gray-500 hover:text-[#0fa] transition-colors flex items-center gap-2"
+                  className="font-mono text-xs text-gray-400 hover:text-[#0fa] transition-colors flex items-center gap-2"
                 >
                   <span className="text-[#0fa]">→</span> view tryhackme profile
                 </a>
