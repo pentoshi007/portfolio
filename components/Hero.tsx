@@ -17,11 +17,6 @@ export default function Hero() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 pt-20 flex flex-col items-center text-center">
         <div className="mb-8 w-full max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#0fa]/30 bg-[#0fa]/5 mb-6">
-            <div className="status-dot" />
-            <span className="font-mono text-xs text-[#0fa]">SYSTEM ONLINE</span>
-          </div>
-
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
             <span className="text-white">I&apos;m </span>
             <GlitchText text="Aniket" className="neon-text" />
