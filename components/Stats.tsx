@@ -13,7 +13,7 @@ export default function Stats() {
       <div className="max-w-5xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">stats</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* activity & achievements */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* activity & achievements */</p>
         </div>
 
         <div className="space-y-6">

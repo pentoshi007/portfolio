@@ -20,12 +20,25 @@ const typingLines = [
   '[+] 20+ secure API endpoints built',
 ];
 
+const getLineStyle = (line: string) => {
+  if (line.startsWith('>')) return 'text-[#0fa]';
+  if (line.startsWith('[+]')) return 'text-emerald-400';
+  if (line.includes('=')) return 'text-amber-400';
+  return 'text-gray-400';
+};
+
 export default function TerminalAnimation() {
+  const [mounted, setMounted] = useState(false);
   const [displayedLines, setDisplayedLines] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     if (currentLine >= typingLines.length) return;
 
     const line = typingLines[currentLine];
@@ -43,14 +56,22 @@ export default function TerminalAnimation() {
       }, line === '' ? 100 : 150);
       return () => clearTimeout(timeout);
     }
-  }, [currentLine, currentChar]);
+  }, [mounted, currentLine, currentChar]);
 
-  const getLineStyle = (line: string) => {
-    if (line.startsWith('>')) return 'text-[#0fa]';
-    if (line.startsWith('[+]')) return 'text-emerald-400';
-    if (line.includes('=')) return 'text-amber-400';
-    return 'text-gray-400';
-  };
+  if (!mounted) {
+    return (
+      <div className="p-4 font-mono text-xs md:text-sm h-[280px] overflow-hidden">
+        {typingLines.slice(0, 8).map((line, i) => (
+          <div key={i} className={`${getLineStyle(line)} ${line === '' ? 'h-3' : ''}`}>
+            {line}
+          </div>
+        ))}
+        <div className="text-[#0fa]">
+          {'>'} <span className="inline-block w-2 h-4 bg-[#0fa] ml-0.5 animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 font-mono text-xs md:text-sm h-[280px] overflow-hidden">

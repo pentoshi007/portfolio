@@ -42,7 +42,7 @@ export default function Contact() {
       <div className="max-w-4xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">ping</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* let's connect */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* let's connect */</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -81,16 +81,18 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 border border-[#0fa]/20 hover:border-[#0fa] hover:bg-[#0fa]/10 transition-all"
+                aria-label="GitHub profile"
               >
-                <Github className="w-5 h-5 text-[#0fa]" />
+                <Github className="w-5 h-5 text-[#0fa]" aria-hidden="true" />
               </a>
               <a
                 href={personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 border border-[#0fa]/20 hover:border-[#0fa] hover:bg-[#0fa]/10 transition-all"
+                aria-label="LinkedIn profile"
               >
-                <Linkedin className="w-5 h-5 text-[#0fa]" />
+                <Linkedin className="w-5 h-5 text-[#0fa]" aria-hidden="true" />
               </a>
             </div>
           </div>

@@ -14,7 +14,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">whoami</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* quick overview */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* quick overview */</p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-8">
@@ -32,7 +32,7 @@ export default function About() {
             </p>
 
             <div className="pt-6 border-t border-[#0fa]/10">
-              <p className="font-mono text-sm text-gray-500 mb-4">$ cat /proc/stats</p>
+              <p className="font-mono text-sm text-gray-400 mb-4">$ cat /proc/stats</p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { num: '6+', label: 'apps shipped' },
@@ -42,7 +42,7 @@ export default function About() {
                 ].map((stat) => (
                   <div key={stat.label} className="text-center p-4 border border-[#0fa]/10 hover:border-[#0fa]/30 transition-colors">
                     <div className="text-2xl font-bold neon-text">{stat.num}</div>
-                    <div className="text-xs text-gray-500 font-mono mt-1">{stat.label}</div>
+                    <div className="text-xs text-gray-400 font-mono mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -50,7 +50,7 @@ export default function About() {
           </div>
 
           <div ref={eduRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-2 ${eduVisible ? 'slide-in-right' : 'opacity-0'}`}>
-            <p className="font-mono text-sm text-gray-500 mb-4">$ cat education.log</p>
+            <p className="font-mono text-sm text-gray-400 mb-4">$ cat education.log</p>
             <div className="space-y-4">
               {education.map((edu, index) => (
                 <div
@@ -64,7 +64,7 @@ export default function About() {
                     <div>
                       <h4 className="text-white text-sm font-medium">{edu.degree}</h4>
                       <p className="text-[#0fa] text-xs mt-0.5">{edu.institution}</p>
-                      <div className="flex flex-wrap gap-3 mt-2 text-[10px] text-gray-500 font-mono">
+                      <div className="flex flex-wrap gap-3 mt-2 text-[10px] text-gray-400 font-mono">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           {edu.duration}

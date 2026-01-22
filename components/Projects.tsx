@@ -18,7 +18,7 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">projects</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* things i've built */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* things i've built */</p>
         </div>
 
         <div ref={listRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -46,8 +46,9 @@ export default function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-1.5 text-gray-500 hover:text-[#0fa] transition-colors"
+                    aria-label={`View ${project.title} on GitHub`}
                   >
-                    <Github className="w-4 h-4" />
+                    <Github className="w-4 h-4" aria-hidden="true" />
                   </a>
                   {project.live && (
                     <a
@@ -55,8 +56,9 @@ export default function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-1.5 text-gray-500 hover:text-[#0fa] transition-colors"
+                      aria-label={`View ${project.title} live demo`}
                     >
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLink className="w-4 h-4" aria-hidden="true" />
                     </a>
                   )}
                 </div>
@@ -68,7 +70,7 @@ export default function Projects() {
                     <h3 className="text-xl font-bold text-white group-hover:text-[#0fa] transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-500 text-sm">{project.subtitle}</p>
+                    <p className="text-gray-400 text-sm">{project.subtitle}</p>
                   </div>
                 </div>
 

@@ -13,7 +13,7 @@ export default function Certifications() {
       <div className="max-w-5xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">certs</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* verified skills */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* verified skills */</p>
         </div>
 
         <div ref={gridRef as React.RefObject<HTMLDivElement>} className="grid md:grid-cols-2 gap-4">
@@ -38,7 +38,7 @@ export default function Certifications() {
                       </h3>
                       <p className="text-[#0fa] text-sm">{cert.issuer}</p>
                     </div>
-                    <span className="font-mono text-[10px] text-gray-500">{cert.date}</span>
+                    <span className="font-mono text-[10px] text-gray-400">{cert.date}</span>
                   </div>
                   <p className="text-gray-400 text-sm mt-2 leading-relaxed">{cert.description}</p>
                 </div>

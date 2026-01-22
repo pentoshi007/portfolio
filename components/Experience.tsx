@@ -12,7 +12,7 @@ export default function Experience() {
       <div className="max-w-5xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">ops</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* missions completed */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* missions completed */</p>
         </div>
 
         <div ref={timelineRef as React.RefObject<HTMLDivElement>} className="relative pl-8 timeline-line">
@@ -31,7 +31,7 @@ export default function Experience() {
                     <h3 className="text-xl font-semibold text-white">{exp.role}</h3>
                     <p className="text-[#0fa]">@ {exp.company}</p>
                   </div>
-                  <div className="font-mono text-xs text-gray-500">
+                  <div className="font-mono text-xs text-gray-400">
                     {exp.duration}
                   </div>
                 </div>
@@ -50,7 +50,7 @@ export default function Experience() {
         </div>
 
         <div className="mt-12 p-4 border border-dashed border-[#0fa]/20 text-center">
-          <p className="font-mono text-xs text-gray-500">
+          <p className="font-mono text-xs text-gray-400">
             <span className="text-[#0fa]">$</span> more opportunities loading...
           </p>
         </div>

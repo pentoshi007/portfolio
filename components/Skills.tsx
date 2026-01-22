@@ -51,7 +51,7 @@ export default function Skills() {
       <div className="max-w-6xl mx-auto">
         <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">arsenal</h2>
-          <p className="text-gray-500 font-mono text-sm mt-4">/* tools of the trade */</p>
+          <p className="text-gray-400 font-mono text-sm mt-4">/* tools of the trade */</p>
         </div>
 
         <div ref={gridRef as React.RefObject<HTMLDivElement>} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -64,7 +64,7 @@ export default function Skills() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="font-mono text-xs tracking-wider" style={{ color }}>{label}</h3>
-                  <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+                  <p className="text-gray-400 text-xs mt-0.5">{desc}</p>
                 </div>
                 <div
                   className="w-2 h-2 rounded-full opacity-60"
@@ -102,7 +102,7 @@ export default function Skills() {
             </div>
             <div>
               <p className="font-mono text-xs text-[#0fa]/60 mb-1">$ echo $SOFT_SKILLS</p>
-              <p className="text-gray-500 text-xs">
+              <p className="text-gray-400 text-xs">
                 Problem Solving | Analytical | Self-Learning | Detail-Oriented
               </p>
             </div>
