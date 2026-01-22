@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
+import crypto from 'crypto';
 
 export interface IBlog extends Document {
   title: string;
@@ -7,6 +8,7 @@ export interface IBlog extends Document {
   coverImage?: string;
   images: string[];
   published: boolean;
+  previewToken?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,6 +20,7 @@ const BlogSchema = new Schema<IBlog>({
   coverImage: { type: String },
   images: [{ type: String }],
   published: { type: Boolean, default: false, index: true },
+  previewToken: { type: String, index: true },
   createdAt: { type: Date, default: Date.now, index: true },
   updatedAt: { type: Date, default: Date.now },
 });
@@ -33,6 +36,9 @@ BlogSchema.pre('validate', function() {
       .trim()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
+  }
+  if (!this.previewToken) {
+    this.previewToken = crypto.randomBytes(16).toString('hex');
   }
   this.updatedAt = new Date();
 });

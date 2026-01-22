@@ -15,6 +15,7 @@ export const revalidate = 0;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
 
 interface BlogData {
@@ -28,10 +29,17 @@ interface BlogData {
   updatedAt: string;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const { preview } = await searchParams;
   await dbConnect();
-  const blog = await Blog.findOne({ slug, published: true }).select('title body coverImage createdAt updatedAt').lean();
+  
+  let blog;
+  if (preview) {
+    blog = await Blog.findOne({ slug, previewToken: preview }).select('title body coverImage createdAt updatedAt').lean();
+  } else {
+    blog = await Blog.findOne({ slug, published: true }).select('title body coverImage createdAt updatedAt').lean();
+  }
   
   if (!blog) {
     return { title: 'Blog Not Found' };
@@ -121,10 +129,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
+  const { preview } = await searchParams;
   await dbConnect();
-  const blog = await Blog.findOne({ slug, published: true }).lean();
+  
+  let blog;
+  let isPreview = false;
+  
+  if (preview) {
+    blog = await Blog.findOne({ slug, previewToken: preview }).lean();
+    isPreview = !!blog && !(blog as any).published;
+  } else {
+    blog = await Blog.findOne({ slug, published: true }).lean();
+  }
 
   if (!blog) {
     notFound();
@@ -171,6 +189,15 @@ export default async function BlogPostPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-[#0a0a0f] overflow-x-hidden">
+      {isPreview && (
+        <div className="bg-amber-500/20 border-b border-amber-500/40 py-2">
+          <div className="max-w-3xl mx-auto px-4">
+            <p className="text-amber-400 font-mono text-sm text-center">
+              Preview Mode - This post is not published yet
+            </p>
+          </div>
+        </div>
+      )}
       <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95 sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">

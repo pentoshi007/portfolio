@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, FileText, LogOut, Eye, Trash2, Plus, Edit, Check, X } from 'lucide-react';
+import { Mail, FileText, LogOut, Eye, Trash2, Plus, Edit, Check, X, Share2, Copy } from 'lucide-react';
 
 interface Message {
   _id: string;
@@ -19,6 +19,7 @@ interface Blog {
   slug: string;
   body: string;
   published: boolean;
+  previewToken?: string;
   createdAt: string;
 }
 
@@ -90,6 +91,12 @@ export default function AdminDashboard() {
     if (res.ok) {
       setBlogs(blogs.map(b => b._id === blog._id ? { ...b, published: !b.published } : b));
     }
+  };
+
+  const copyPreviewLink = (blog: Blog) => {
+    const previewUrl = `https://blogs.aniketpandey.website/${blog.slug}?preview=${blog.previewToken}`;
+    navigator.clipboard.writeText(previewUrl);
+    alert('Preview link copied to clipboard!');
   };
 
   const unreadCount = messages.filter(m => !m.read).length;
@@ -238,6 +245,15 @@ export default function AdminDashboard() {
                         </p>
                       </div>
                       <div className="flex gap-2">
+                        {!blog.published && blog.previewToken && (
+                          <button
+                            onClick={() => copyPreviewLink(blog)}
+                            className="p-2 text-gray-500 hover:text-blue-400 transition-colors"
+                            title="Copy preview link"
+                          >
+                            <Share2 className="w-4 h-4" />
+                          </button>
+                        )}
                         <button
                           onClick={() => togglePublish(blog)}
                           className={`p-2 transition-colors ${
