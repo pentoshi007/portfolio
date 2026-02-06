@@ -49,7 +49,7 @@ export default function Skills() {
   return (
     <section id="skills" className="py-24 px-4 md:px-8 bg-[#080810]/95">
       <div className="max-w-6xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 anim-hidden anim-slide-left ${titleVisible ? 'anim-visible' : ''}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">arsenal</h2>
           <p className="text-gray-400 font-mono text-sm mt-4">/* tools of the trade */</p>
         </div>
@@ -58,7 +58,7 @@ export default function Skills() {
           {categories.map(({ key, label, desc, color }, index) => (
             <div
               key={key}
-              className={`hacker-card p-5 group transition-all duration-300 ${gridVisible ? `scale-in stagger-${(index % 6) + 1}` : 'opacity-0'}`}
+              className={`hacker-card p-5 group transition-all duration-300 anim-hidden anim-scale stagger-${(index % 6) + 1} ${gridVisible ? 'anim-visible' : ''}`}
               style={{ '--accent': color } as React.CSSProperties}
             >
               <div className="flex items-center justify-between mb-4">

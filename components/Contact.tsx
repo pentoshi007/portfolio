@@ -40,13 +40,13 @@ export default function Contact() {
   return (
     <section id="contact" className="py-16 px-4 md:px-8">
       <div className="max-w-4xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 anim-hidden anim-slide-left ${titleVisible ? 'anim-visible' : ''}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">ping</h2>
           <p className="text-gray-400 font-mono text-sm mt-4">/* let's connect */</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <div ref={infoRef as React.RefObject<HTMLDivElement>} className={infoVisible ? 'slide-in-left' : 'opacity-0'}>
+          <div ref={infoRef as React.RefObject<HTMLDivElement>} className={`anim-hidden anim-slide-left ${infoVisible ? 'anim-visible' : ''}`}>
             <p className="text-gray-300 mb-6">
               Got a security audit that needs doing? A web app that needs building?
               Or just want to talk shop about the latest CVEs? I'm all ears.
@@ -55,7 +55,7 @@ export default function Contact() {
             <div className="space-y-3">
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="flex items-center gap-4 p-4 border border-[#0fa]/10 hover:border-[#0fa]/30 hover:bg-[#0fa]/5 transition-all group"
+                className="flex items-center gap-4 p-4 border border-[#0fa]/10 hover:border-[#0fa]/30 hover:bg-[#0fa]/5 transition-colors group"
               >
                 <Mail className="w-5 h-5 text-[#0fa]" />
                 <div>
@@ -80,7 +80,7 @@ export default function Contact() {
                 href={personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 border border-[#0fa]/20 hover:border-[#0fa] hover:bg-[#0fa]/10 transition-all"
+                className="p-3 border border-[#0fa]/20 hover:border-[#0fa] hover:bg-[#0fa]/10 transition-colors"
                 aria-label="GitHub profile"
               >
                 <Github className="w-5 h-5 text-[#0fa]" aria-hidden="true" />
@@ -89,7 +89,7 @@ export default function Contact() {
                 href={personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 border border-[#0fa]/20 hover:border-[#0fa] hover:bg-[#0fa]/10 transition-all"
+                className="p-3 border border-[#0fa]/20 hover:border-[#0fa] hover:bg-[#0fa]/10 transition-colors"
                 aria-label="LinkedIn profile"
               >
                 <Linkedin className="w-5 h-5 text-[#0fa]" aria-hidden="true" />
@@ -97,7 +97,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div ref={formRef as React.RefObject<HTMLDivElement>} className={`hacker-card p-6 ${formVisible ? 'slide-in-right' : 'opacity-0'}`}>
+          <div ref={formRef as React.RefObject<HTMLDivElement>} className={`hacker-card p-6 anim-hidden anim-slide-right ${formVisible ? 'anim-visible' : ''}`}>
             <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#0fa]/10">
               <div className="status-dot" />
               <span className="font-mono text-xs text-[#0fa]/60">secure_channel</span>

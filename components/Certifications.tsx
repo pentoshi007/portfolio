@@ -11,7 +11,7 @@ export default function Certifications() {
   return (
     <section id="certifications" className="py-16 px-4 md:px-8 bg-transparent">
       <div className="max-w-5xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 anim-hidden anim-slide-left ${titleVisible ? 'anim-visible' : ''}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">certs</h2>
           <p className="text-gray-400 font-mono text-sm mt-4">/* verified skills */</p>
         </div>
@@ -23,7 +23,7 @@ export default function Certifications() {
               href={cert.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hacker-card p-5 group transition-all duration-300 block ${gridVisible ? `scale-in stagger-${(index % 6) + 1}` : 'opacity-0'}`}
+              className={`hacker-card p-5 group block anim-hidden anim-scale stagger-${(index % 6) + 1} ${gridVisible ? 'anim-visible' : ''}`}
             >
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 flex items-center justify-center bg-[#0fa]/10 group-hover:bg-[#0fa]/20 transition-colors">

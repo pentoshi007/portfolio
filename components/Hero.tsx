@@ -44,7 +44,7 @@ export default function Hero() {
         <div className="flex flex-wrap gap-3 mb-12">
           <a
             href="#contact"
-            className="group px-5 py-2.5 bg-[#0fa] text-[#0a0a0f] font-mono text-sm font-medium hover:bg-[#0fa]/90 transition-all flex items-center gap-2"
+            className="group px-5 py-2.5 bg-[#0fa] text-[#0a0a0f] font-mono text-sm font-medium hover:bg-[#0fa]/90 transition-colors flex items-center gap-2"
           >
             <Mail className="w-4 h-4" />
             ./contact_me
@@ -53,7 +53,7 @@ export default function Hero() {
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-2.5 border border-[#0fa]/30 text-[#0fa] font-mono text-sm hover:bg-[#0fa]/10 transition-all flex items-center gap-2"
+            className="px-5 py-2.5 border border-[#0fa]/30 text-[#0fa] font-mono text-sm hover:bg-[#0fa]/10 transition-colors flex items-center gap-2"
           >
             <Github className="w-4 h-4" />
             github
@@ -62,7 +62,7 @@ export default function Hero() {
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-2.5 border border-[#0fa]/30 text-[#0fa] font-mono text-sm hover:bg-[#0fa]/10 transition-all flex items-center gap-2"
+            className="px-5 py-2.5 border border-[#0fa]/30 text-[#0fa] font-mono text-sm hover:bg-[#0fa]/10 transition-colors flex items-center gap-2"
           >
             <Linkedin className="w-4 h-4" />
             linkedin

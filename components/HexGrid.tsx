@@ -9,12 +9,21 @@ export default function HexGrid() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
+    let animationId: number;
+    let lastFrame = 0;
+    let paused = false;
+    const FPS_INTERVAL = 1000 / 20;
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.scale(dpr, dpr);
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -36,13 +45,23 @@ export default function HexGrid() {
       ctx.stroke();
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    const animate = (timestamp: number) => {
+      if (paused) return;
+      animationId = requestAnimationFrame(animate);
+
+      const delta = timestamp - lastFrame;
+      if (delta < FPS_INTERVAL) return;
+      lastFrame = timestamp - (delta % FPS_INTERVAL);
+
+      ctx.clearRect(0, 0, w, h);
       time += 0.01;
 
       const hexSize = 30;
-      const rows = Math.ceil(canvas.height / (hexSize * 1.5)) + 1;
-      const cols = Math.ceil(canvas.width / (hexSize * Math.sqrt(3))) + 1;
+      const rows = Math.ceil(h / (hexSize * 1.5)) + 1;
+      const cols = Math.ceil(w / (hexSize * Math.sqrt(3))) + 1;
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
@@ -50,7 +69,7 @@ export default function HexGrid() {
           const y = row * hexSize * 1.5;
 
           const distance = Math.sqrt(
-            Math.pow(x - canvas.width / 2, 2) + Math.pow(y - canvas.height / 2, 2)
+            Math.pow(x - w / 2, 2) + Math.pow(y - h / 2, 2)
           );
           const wave = Math.sin(distance * 0.01 - time) * 0.5 + 0.5;
           const opacity = wave * 0.1;
@@ -62,14 +81,26 @@ export default function HexGrid() {
           }
         }
       }
-
-      requestAnimationFrame(animate);
     };
 
-    animate();
+    animationId = requestAnimationFrame(animate);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        paused = true;
+        cancelAnimationFrame(animationId);
+      } else {
+        paused = false;
+        lastFrame = 0;
+        animationId = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
+      cancelAnimationFrame(animationId);
       window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 

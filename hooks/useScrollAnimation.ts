@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface ScrollAnimationOptions {
   threshold?: number;
@@ -12,6 +12,12 @@ export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
   const elementRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  const clearWillChange = useCallback(() => {
+    if (elementRef.current) {
+      elementRef.current.style.willChange = 'auto';
+    }
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -19,6 +25,10 @@ export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
           setIsVisible(true);
           if (once && elementRef.current) {
             observer.unobserve(elementRef.current);
+            const el = elementRef.current;
+            el.addEventListener('transitionend', () => {
+              el.style.willChange = 'auto';
+            }, { once: true });
           }
         } else if (!once) {
           setIsVisible(false);
@@ -37,7 +47,7 @@ export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
         observer.unobserve(currentElement);
       }
     };
-  }, [threshold, once]);
+  }, [threshold, once, clearWillChange]);
 
   return { elementRef, isVisible };
 }

@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { Github, Shield, ExternalLink } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
@@ -8,10 +10,32 @@ export default function Stats() {
   const { elementRef: githubRef, isVisible: githubVisible } = useScrollAnimation();
   const { elementRef: thmRef, isVisible: thmVisible } = useScrollAnimation();
 
+  // Defer iframe loading until the THM section is near viewport
+  const iframeContainerRef = useRef<HTMLDivElement>(null);
+  const [loadIframe, setLoadIframe] = useState(false);
+
+  useEffect(() => {
+    const el = iframeContainerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadIframe(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="stats" className="py-16 px-4 md:px-8 bg-[#080810]/95">
       <div className="max-w-5xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-10 anim-hidden anim-slide-left ${titleVisible ? 'anim-visible' : ''}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">stats</h2>
           <p className="text-gray-400 font-mono text-sm mt-4">/* activity & achievements */</p>
         </div>
@@ -23,7 +47,7 @@ export default function Stats() {
             href="https://github.com/pentoshi007" 
             target="_blank" 
             rel="noopener noreferrer"
-            className={`block hacker-card p-5 md:p-6 group hover:border-[#0fa]/40 transition-all ${githubVisible ? 'slide-in-left' : 'opacity-0'}`}
+            className={`block hacker-card p-5 md:p-6 group hover:border-[#0fa]/40 anim-hidden anim-slide-left ${githubVisible ? 'anim-visible' : ''}`}
           >
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[#0fa]/10">
               <Github className="w-5 h-5 text-[#0fa]" />
@@ -33,13 +57,14 @@ export default function Stats() {
               </span>
             </div>
             <div className="overflow-x-auto scrollbar-thin">
-              <img 
+              <Image 
                 src="https://ghchart.rshah.org/00ff99/pentoshi007"
                 alt="GitHub Contributions"
                 width={722}
                 height={112}
                 className="w-full min-w-[650px]"
                 loading="lazy"
+                unoptimized
               />
             </div>
           </a>
@@ -47,7 +72,7 @@ export default function Stats() {
           {/* TryHackMe Stats */}
           <div 
             ref={thmRef as React.RefObject<HTMLDivElement>}
-            className={`hacker-card p-5 md:p-6 ${thmVisible ? 'slide-in-right' : 'opacity-0'}`}
+            className={`hacker-card p-5 md:p-6 anim-hidden anim-slide-right ${thmVisible ? 'anim-visible' : ''}`}
           >
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[#0fa]/10">
               <Shield className="w-5 h-5 text-[#0fa]" />
@@ -55,18 +80,23 @@ export default function Stats() {
               <div className="ml-auto status-dot" />
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <div className="flex-shrink-0 w-full sm:w-auto overflow-hidden">
-                <iframe 
-                  src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=3110287" 
-                  width="320"
-                  height="100"
-                  frameBorder="0"
-                  loading="lazy"
-                  scrolling="no"
-                  className="rounded max-w-full"
-                  style={{ border: 'none', overflow: 'hidden' }}
-                  title="TryHackMe Badge"
-                />
+              <div ref={iframeContainerRef} className="flex-shrink-0 w-full sm:w-auto overflow-hidden" style={{ minHeight: 100 }}>
+                {loadIframe ? (
+                  <iframe 
+                    src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=3110287" 
+                    width="320"
+                    height="100"
+                    frameBorder="0"
+                    scrolling="no"
+                    className="rounded max-w-full"
+                    style={{ border: 'none', overflow: 'hidden' }}
+                    title="TryHackMe Badge"
+                  />
+                ) : (
+                  <div className="w-[320px] h-[100px] max-w-full rounded bg-[#12121a] border border-[#0fa]/10 flex items-center justify-center">
+                    <span className="font-mono text-xs text-gray-600">loading badge...</span>
+                  </div>
+                )}
               </div>
               <div className="flex-1">
                 <p className="text-gray-400 text-sm mb-3 leading-relaxed">

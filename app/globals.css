@@ -53,7 +53,7 @@
   --bg-darker: #050508;
 }
 
-* {
+html {
   scroll-behavior: smooth;
 }
 
@@ -157,6 +157,13 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--neon), transparent);
   opacity: 0.5;
+}
+
+.hacker-card {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hacker-card:hover {
@@ -327,7 +334,8 @@ body {
 .nav-link {
   position: relative;
   color: #888;
-  transition: color 0.3s;
+  -webkit-transition: color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
@@ -340,7 +348,9 @@ body {
   left: -15px;
   opacity: 0;
   color: var(--neon);
-  transition: opacity 0.3s, transform 0.3s;
+  -webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  -webkit-transform: translateX(-5px);
   transform: translateX(-5px);
 }
 
@@ -383,7 +393,8 @@ body {
   background: rgba(0, 255, 170, 0.08);
   border: 1px solid rgba(0, 255, 170, 0.2);
   color: var(--neon);
-  transition: all 0.3s;
+  -webkit-transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .tag:hover {
@@ -409,13 +420,7 @@ input:focus, textarea:focus {
     rgba(0, 0, 0, 0.08) 2px,
     rgba(0, 0, 0, 0.08) 4px
   );
-  animation: scanline-move 8s linear infinite;
   opacity: 0.8;
-}
-
-@keyframes scanline-move {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(20px); }
 }
 
 .vignette-effect {
@@ -427,91 +432,74 @@ input:focus, textarea:focus {
   );
 }
 
+/* ===================================================
+   SCROLL-REVEAL: Transition-based (Safari-safe)
+   Use .anim-hidden as initial state, add .anim-visible to trigger.
+   Stagger via transition-delay inline or stagger-* classes.
+   =================================================== */
+
+.anim-hidden {
+  opacity: 0;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+}
+
+/* Direction variants – applied alongside .anim-hidden */
+.anim-slide-up {
+  -webkit-transform: translate3d(0, 30px, 0);
+  transform: translate3d(0, 30px, 0);
+}
+.anim-slide-left {
+  -webkit-transform: translate3d(-30px, 0, 0);
+  transform: translate3d(-30px, 0, 0);
+}
+.anim-slide-right {
+  -webkit-transform: translate3d(30px, 0, 0);
+  transform: translate3d(30px, 0, 0);
+}
+.anim-scale {
+  -webkit-transform: scale3d(0.95, 0.95, 1);
+  transform: scale3d(0.95, 0.95, 1);
+}
+
+/* Visible state – triggers the transition */
+.anim-visible {
+  opacity: 1 !important;
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) !important;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) !important;
+}
+
+/* Transition definition – separated so initial paint has no transition */
+.anim-hidden {
+  -webkit-transition: opacity 0.6s ease-out, -webkit-transform 0.6s ease-out;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.anim-scale {
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+/* Stagger delays via transition-delay */
+.stagger-1 { -webkit-transition-delay: 0.1s; transition-delay: 0.1s; }
+.stagger-2 { -webkit-transition-delay: 0.2s; transition-delay: 0.2s; }
+.stagger-3 { -webkit-transition-delay: 0.3s; transition-delay: 0.3s; }
+.stagger-4 { -webkit-transition-delay: 0.4s; transition-delay: 0.4s; }
+.stagger-5 { -webkit-transition-delay: 0.5s; transition-delay: 0.5s; }
+.stagger-6 { -webkit-transition-delay: 0.6s; transition-delay: 0.6s; }
+
+/* Legacy class names kept for non-scroll usage (page load fade) */
 .fade-in {
+  -webkit-animation: fadeIn 0.6s ease-out;
   animation: fadeIn 0.6s ease-out;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-
-.slide-up {
-  animation: slideUp 0.6s ease-out forwards;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.slide-in-left {
-  animation: slideInLeft 0.6s ease-out forwards;
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
-.stagger-6 { animation-delay: 0.6s; }
 
 .glow-pulse {
   animation: glowPulse 2s ease-in-out infinite;
@@ -527,5 +515,6 @@ input:focus, textarea:focus {
 }
 
 .transition-max-height {
+  -webkit-transition: max-height 0.5s ease-in-out;
   transition: max-height 0.5s ease-in-out;
 }

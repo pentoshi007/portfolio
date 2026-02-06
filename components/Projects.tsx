@@ -16,7 +16,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-16 px-4 md:px-8 bg-[#080810]/95">
       <div className="max-w-6xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 anim-hidden anim-slide-left ${titleVisible ? 'anim-visible' : ''}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">projects</h2>
           <p className="text-gray-400 font-mono text-sm mt-4">/* things i've built */</p>
         </div>
@@ -25,8 +25,8 @@ export default function Projects() {
           {displayedProjects.map((project, index) => (
             <div
               key={project.title}
-              className={`hacker-card group transition-all duration-300 flex flex-col h-full ${listVisible ? `scale-in` : 'opacity-0'}`}
-              style={{ animationDelay: `${index * 80}ms` }}
+              className={`hacker-card group flex flex-col h-full anim-hidden anim-scale ${listVisible ? 'anim-visible' : ''}`}
+              style={{ transitionDelay: `${index * 80}ms` }}
             >
               <div className="flex items-center gap-2 px-5 py-3 border-b border-[#0fa]/10 bg-[#0fa]/5">
                 <div className="flex gap-1.5">

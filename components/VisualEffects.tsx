@@ -17,11 +17,13 @@ export default function VisualEffects() {
 
     if (mediaQuery.matches) return;
 
-    const timer = setTimeout(() => {
-      setShouldRender(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
+    if (typeof requestIdleCallback !== 'undefined') {
+      const id = requestIdleCallback(() => setShouldRender(true), { timeout: 2000 });
+      return () => cancelIdleCallback(id);
+    } else {
+      const timer = setTimeout(() => setShouldRender(true), 1500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   if (prefersReducedMotion || !shouldRender) return null;

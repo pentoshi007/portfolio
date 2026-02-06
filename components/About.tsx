@@ -12,13 +12,13 @@ export default function About() {
   return (
     <section id="about" className="py-24 px-4 md:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto">
-        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 ${titleVisible ? 'slide-in-left' : 'opacity-0'}`}>
+        <div ref={titleRef as React.RefObject<HTMLDivElement>} className={`mb-16 anim-hidden anim-slide-left ${titleVisible ? 'anim-visible' : ''}`}>
           <h2 className="section-title text-2xl md:text-3xl font-bold text-white mb-2">whoami</h2>
           <p className="text-gray-400 font-mono text-sm mt-4">/* quick overview */</p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-8">
-          <div ref={contentRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-3 space-y-6 ${contentVisible ? 'slide-up' : 'opacity-0'}`}>
+          <div ref={contentRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-3 space-y-6 anim-hidden anim-slide-up ${contentVisible ? 'anim-visible' : ''}`}>
             <p className="text-gray-300 text-lg leading-relaxed">
               Security researcher by curiosity, developer by profession. I spend my days
               writing code that's meant to be broken - and then making sure it can't be.
@@ -49,13 +49,13 @@ export default function About() {
             </div>
           </div>
 
-          <div ref={eduRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-2 ${eduVisible ? 'slide-in-right' : 'opacity-0'}`}>
+          <div ref={eduRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-2 anim-hidden anim-slide-right ${eduVisible ? 'anim-visible' : ''}`}>
             <p className="font-mono text-sm text-gray-400 mb-4">$ cat education.log</p>
             <div className="space-y-4">
               {education.map((edu, index) => (
                 <div
                   key={index}
-                  className={`hacker-card p-4 transition-all duration-300 ${eduVisible ? `scale-in stagger-${index + 1}` : 'opacity-0'}`}
+                  className={`hacker-card p-4 transition-all duration-300 anim-hidden anim-scale stagger-${index + 1} ${eduVisible ? 'anim-visible' : ''}`}
                 >
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 flex items-center justify-center bg-[#0fa]/10 text-[#0fa] font-mono text-xs flex-shrink-0">
