@@ -4,7 +4,7 @@ export const personalInfo = {
   email: 'aniket00736@gmail.com',
   linkedin: 'https://linkedin.com/in/aniket00736',
   github: 'https://github.com/pentoshi007',
-  summary: `Full-stack web developer and cybersecurity analyst specializing in the JS/TS ecosystem. Built and deployed 6+ production-ready web applications with secure authentication, scalable architectures, and RESTful APIs. Finished 180+ cybersecurity challenges ranking in top 2% on TryHackMe.`,
+  summary: `Full-stack web developer and cybersecurity analyst specializing in the JS/TS ecosystem. Built and deployed 6+ production-ready web applications with secure authentication, scalable architectures, and RESTful APIs. Finished 200+ cybersecurity challenges ranking in top 1% on TryHackMe.`,
 };
 
 export const skills = {

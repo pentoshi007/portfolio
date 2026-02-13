@@ -36,8 +36,8 @@ export default function About() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { num: '6+', label: 'apps shipped' },
-                  { num: '180+', label: 'CTF solves' },
-                  { num: 'Top 2%', label: 'TryHackMe' },
+                  { num: '200+', label: 'CTF solves' },
+                  { num: 'Top 1%', label: 'TryHackMe' },
                   { num: '75%', label: 'time saved' },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center p-4 border border-[#0fa]/10 hover:border-[#0fa]/30 transition-colors">
