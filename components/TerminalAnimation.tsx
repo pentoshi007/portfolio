@@ -14,7 +14,7 @@ const typingLines = [
   'STATUS="Available for opportunities"',
   '',
   '> ./achievements --list',
-  '[+] 6+ production apps deployed',
+  '[+] 8+ production apps deployed',
   '[+] Top 1% on TryHackMe',
   '[+] 200+ CTF challenges pwned',
   '[+] 20+ secure API endpoints built',

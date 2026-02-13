@@ -35,7 +35,7 @@ export default function About() {
               <p className="font-mono text-sm text-gray-400 mb-4">$ cat /proc/stats</p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { num: '6+', label: 'apps shipped' },
+                  { num: '8+', label: 'apps shipped' },
                   { num: '200+', label: 'CTF solves' },
                   { num: 'Top 1%', label: 'TryHackMe' },
                   { num: '75%', label: 'time saved' },
