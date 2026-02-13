@@ -15,8 +15,8 @@ const typingLines = [
   '',
   '> ./achievements --list',
   '[+] 6+ production apps deployed',
-  '[+] Top 2% on TryHackMe',
-  '[+] 180+ CTF challenges pwned',
+  '[+] Top 1% on TryHackMe',
+  '[+] 200+ CTF challenges pwned',
   '[+] 20+ secure API endpoints built',
 ];
 
