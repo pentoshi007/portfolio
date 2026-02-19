@@ -9,9 +9,7 @@ import TableOfContents from './TableOfContents';
 import ProgressiveImage from '@/components/ProgressiveImage';
 import { Metadata } from 'next';
 
-// Disable caching - always fetch fresh data from database
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{ slug: string }>;

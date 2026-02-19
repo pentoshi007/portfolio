@@ -56,9 +56,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Disable caching - always fetch fresh data from database
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface BlogData {
   _id: string;

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { isAuthenticated } from '@/lib/auth';
@@ -74,6 +75,11 @@ export async function POST(request: NextRequest) {
       images: images || [],
       published: published || false,
     });
+
+    revalidatePath('/');
+    if (published) {
+      revalidatePath(`/${slug}`);
+    }
 
     return NextResponse.json(newBlog, { status: 201 });
   } catch (error: any) {

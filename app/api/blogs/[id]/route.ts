@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { isAuthenticated } from '@/lib/auth';
@@ -110,6 +111,9 @@ export async function PUT(
     if (!blog) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
+
+    revalidatePath('/');
+    revalidatePath(`/${(blog as any).slug}`);
     
     return NextResponse.json(blog);
   } catch (error) {
@@ -142,6 +146,9 @@ export async function DELETE(
     if (!blog) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
+
+    revalidatePath('/');
+    revalidatePath(`/${(blog as any).slug}`);
     
     return NextResponse.json({ success: true });
   } catch (error) {
