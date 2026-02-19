@@ -23,7 +23,9 @@ export default function Hero() {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-500 font-light">
-            Building <span className="text-[#0fa]">robust</span> applications with a <span className="text-[#0fa]">security-first</span> mindset.
+            Building <span className="text-[#0fa]">robust</span> applications
+            <br />
+            with a <span className="text-[#0fa]">security-first</span> mindset.
           </p>
         </div>
 
