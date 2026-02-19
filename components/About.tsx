@@ -20,15 +20,14 @@ export default function About() {
         <div className="grid lg:grid-cols-5 gap-8">
           <div ref={contentRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-3 space-y-6 anim-hidden anim-slide-up ${contentVisible ? 'anim-visible' : ''}`}>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Security researcher by curiosity, developer by profession. I spend my days
-              writing code that's meant to be broken - and then making sure it can't be.
+              Full-stack developer with a passion for cybersecurity. I enjoy building efficient, 
+              scalable applications while ensuring they remain secure against modern threats.
             </p>
 
             <p className="text-gray-400 leading-relaxed">
-              Started with competitive programming, fell down the cybersecurity rabbit hole
-              through CTFs, and emerged as someone who sees vulnerabilities everywhere.
-              Now I channel that paranoia into building applications that actually hold up
-              under pressure.
+              My journey started with web development and evolved through CTFs, teaching me 
+              to think like an attacker to build better defenses. I strive to create software 
+              that is not just functional, but fundamentally secure.
             </p>
 
             <div className="pt-6 border-t border-[#0fa]/10">
