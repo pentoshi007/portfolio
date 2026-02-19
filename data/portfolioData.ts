@@ -9,10 +9,10 @@ export const personalInfo = {
 
 export const skills = {
   frontend: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Framer Motion', 'React Query', 'Zod', 'Redux Toolkit', 'Unit/E2E Testing', 'Responsive Design'],
-  backend: ['Node.js', 'Express.js', 'NestJS', 'RESTful APIs', 'JWT/OAuth 2.0', 'WebSockets', 'Serverless'],
+  backend: ['Node.js', 'Express.js', 'RESTful APIs', 'JWT/OAuth 2.0', 'WebSockets', 'Serverless'],
   databases: ['MongoDB', 'Mongoose', 'PostgreSQL', 'Prisma ORM', 'Redis', 'Supabase', 'MongoDB Atlas', 'MySQL'],
   cybersecurity: ['Penetration Testing', 'Vulnerability Assessment', 'Web Security (OWASP)', 'Threat Analysis', 'Identity Management', 'Security Auditing', 'SOC Operations'],
-  securityTools: ['Python', 'C++', 'C', 'Java', 'Bash', 'SQL', 'Burp Suite', 'Metasploit', 'Nmap', 'Wireshark', 'Splunk', 'SIEM (ELK)', 'Snort', 'Zeek', 'Gobuster', 'Checkmarx'],
+  securityTools: ['Python', 'C++', 'C', 'Bash', 'SQL', 'Burp Suite', 'Metasploit', 'Nmap', 'Wireshark', 'Splunk', 'SIEM (ELK)', 'Snort', 'Zeek', 'Gobuster'],
   devops: ['Git', 'GitHub Actions', 'Vercel/Netlify', 'Docker', 'CI/CD Pipelines', 'AWS (S3/Lambda)', 'Linux (Kali/Ubuntu)'],
 };
 
