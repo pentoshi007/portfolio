@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${firaCode.variable} ${spaceGrotesk.variable}`}>
       <head>
-        <link rel="dns-prefetch" href="https://ghchart.rshah.org" />
+        <link rel="preconnect" href="https://ghchart.rshah.org" />
         <link rel="dns-prefetch" href="https://tryhackme.com" />
       </head>
       <body className="antialiased">{children}</body>

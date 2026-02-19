@@ -74,6 +74,8 @@ export default function HexGrid() {
           const wave = Math.sin(distance * 0.01 - time) * 0.5 + 0.5;
           const opacity = wave * 0.1;
 
+          if (opacity < 0.01 && Math.random() <= 0.995) continue;
+
           if (Math.random() > 0.995) {
             drawHex(x, y, hexSize, opacity + 0.2);
           } else {

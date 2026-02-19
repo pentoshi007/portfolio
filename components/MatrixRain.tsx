@@ -34,11 +34,21 @@ export default function MatrixRain() {
     const columns = Math.floor(w / fontSize);
     const drops: number[] = Array(columns).fill(1);
 
+    const buildGradients = () =>
+      Array.from({ length: columns }, (_, i) => {
+        const x = i * fontSize;
+        const g = ctx.createLinearGradient(x, 0, x, fontSize * 5);
+        g.addColorStop(0, 'rgba(0, 255, 170, 0)');
+        g.addColorStop(1, 'rgba(0, 255, 170, 0.8)');
+        return g;
+      });
+
+    let gradients = buildGradients();
+
     const draw = () => {
       ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
       ctx.fillRect(0, 0, w, h);
 
-      ctx.fillStyle = '#0fa';
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
@@ -46,11 +56,7 @@ export default function MatrixRain() {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        const gradient = ctx.createLinearGradient(x, y - fontSize * 5, x, y);
-        gradient.addColorStop(0, 'rgba(0, 255, 170, 0)');
-        gradient.addColorStop(1, 'rgba(0, 255, 170, 0.8)');
-        ctx.fillStyle = gradient;
-
+        ctx.fillStyle = gradients[i];
         ctx.fillText(char, x, y);
 
         if (y > h && Math.random() > 0.975) {

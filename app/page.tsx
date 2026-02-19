@@ -12,6 +12,8 @@ import ScanlineEffect from '@/components/ScanlineEffect';
 import GridBackground from '@/components/GridBackground';
 import VisualEffects from '@/components/VisualEffects';
 
+export const revalidate = false;
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] relative fade-in">

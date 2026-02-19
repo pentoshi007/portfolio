@@ -42,6 +42,7 @@ export default function FloatingParticles() {
     const particles: Particle[] = [];
     const w = window.innerWidth;
     const h = window.innerHeight;
+    const FONT = `14px 'Fira Code', monospace`;
 
     for (let i = 0; i < 35; i++) {
       particles.push({
@@ -49,7 +50,7 @@ export default function FloatingParticles() {
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 12 + 10,
+        size: 14,
         opacity: Math.random() * 0.4 + 0.2,
         char: chars[Math.floor(Math.random() * chars.length)],
       });
@@ -64,6 +65,7 @@ export default function FloatingParticles() {
       lastFrame = timestamp - (delta % FPS_INTERVAL);
 
       ctx.clearRect(0, 0, w, h);
+      ctx.font = FONT;
 
       particles.forEach((particle) => {
         particle.x += particle.vx;
@@ -72,7 +74,6 @@ export default function FloatingParticles() {
         if (particle.x < 0 || particle.x > w) particle.vx *= -1;
         if (particle.y < 0 || particle.y > h) particle.vy *= -1;
 
-        ctx.font = `${particle.size}px 'Fira Code', monospace`;
         ctx.fillStyle = `rgba(0, 255, 170, ${particle.opacity})`;
         ctx.fillText(particle.char, particle.x, particle.y);
       });
