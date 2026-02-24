@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Fira_Code, Space_Grotesk } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/next';
 
 const firaCode = Fira_Code({
   subsets: ['latin'],
@@ -66,7 +67,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://ghchart.rshah.org" />
         <link rel="dns-prefetch" href="https://tryhackme.com" />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">{children}<Analytics /></body>
     </html>
   );
 }

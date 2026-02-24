@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@tailwindcss/typography": "^0.5.19",
+        "@vercel/analytics": "^1.6.1",
         "bcryptjs": "^2.4.3",
         "jose": "^5.9.6",
         "jsonwebtoken": "^9.0.2",
