@@ -89,12 +89,13 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   ];
 
   return {
-    title: `${blogTitle} | Aniket Pandey`,
+    title: blogTitle,
     description,
     keywords: allKeywords,
     authors: [{ name: 'Aniket Pandey' }],
     creator: 'Aniket Pandey',
     publisher: 'Aniket Pandey',
+    robots: preview ? { index: false, follow: false } : { index: true, follow: true },
     openGraph: {
       type: 'article',
       title: blogTitle,

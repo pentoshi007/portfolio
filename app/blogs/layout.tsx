@@ -3,12 +3,15 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   metadataBase: new URL('https://blogs.aniketpandey.website'),
   title: {
-    default: 'Blog | Aniket Pandey',
+    default: 'Aniket Pandey Blog',
     template: '%s | Aniket Pandey Blog',
   },
   description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
   authors: [{ name: 'Aniket Pandey' }],
   creator: 'Aniket Pandey',
+  alternates: {
+    canonical: 'https://blogs.aniketpandey.website',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

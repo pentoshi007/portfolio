@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Aniket Pandey' }],
   creator: 'Aniket Pandey',
   metadataBase: new URL('https://aniketpandey.website'),
+  alternates: {
+    canonical: 'https://aniketpandey.website',
+  },
   icons: {
     icon: '/icon.svg',
     apple: '/apple-icon.svg',

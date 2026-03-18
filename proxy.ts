@@ -71,6 +71,7 @@ export default function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const hostname = request.headers.get('host') || '';
   const pathname = url.pathname;
+  const isMetadataPath = pathname === '/robots.txt' || pathname === '/sitemap.xml';
 
   // Periodic cleanup (10% chance per request)
   if (Math.random() < 0.1) {
@@ -81,7 +82,7 @@ export default function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/static') ||
-    pathname.includes('.') && !pathname.startsWith('/api')
+    (pathname.includes('.') && !pathname.startsWith('/api') && !isMetadataPath)
   ) {
     return NextResponse.next();
   }
@@ -150,6 +151,10 @@ export default function middleware(request: NextRequest) {
 
   // Blogs subdomain routing
   if (hostname.startsWith('blogs.')) {
+    if (pathname === '/sitemap.xml') {
+      return NextResponse.rewrite(new URL('/blogs/sitemap.xml', request.url));
+    }
+
     // If someone hits blogs.<domain>/blogs/*, redirect to the canonical path without /blogs
     if (pathname === '/blogs' || pathname.startsWith('/blogs/')) {
       const newUrl = new URL(url.toString());

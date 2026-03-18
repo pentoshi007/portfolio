@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 import ProgressiveImage from '@/components/ProgressiveImage';
 
 export const metadata: Metadata = {
-  title: 'Blog | Aniket Pandey',
+  title: 'Blog',
   description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, MERN stack tutorials, security research, and programming insights.',
   keywords: [
     'Aniket Pandey',
@@ -116,81 +116,109 @@ export default async function BlogsPage() {
     updatedAt: (b as any).updatedAt?.toISOString(),
   })) as unknown as BlogData[];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Aniket Pandey Blog',
+    url: 'https://blogs.aniketpandey.website',
+    description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
+    author: {
+      '@type': 'Person',
+      name: 'Aniket Pandey',
+      url: 'https://aniketpandey.website',
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: publishedBlogs.map((blog, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `https://blogs.aniketpandey.website/${blog.slug}`,
+        name: blog.title,
+      })),
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <h1 className="text-3xl font-bold text-white">
-                <span className="text-[#0fa]">//</span> blogs
-              </h1>
-              <p className="text-gray-500 font-mono text-sm mt-1">thoughts, tutorials, and security findings</p>
-            </div>
-            <a 
-              href="https://aniketpandey.website" 
-              className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm w-fit"
-            >
-              portfolio
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-4xl mx-auto px-4 py-12">
-        {publishedBlogs.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-gray-500 font-mono">$ no posts yet</p>
-            <p className="text-gray-600 text-sm mt-2">Check back soon!</p>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {publishedBlogs.map((blog: BlogData) => (
-              <Link
-                key={blog._id}
-                href={`/${blog.slug}`}
-                className="block hacker-card p-6 group hover:border-[#0fa]/40 transition-all"
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-[#0a0a0f]">
+        <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95">
+          <div className="max-w-4xl mx-auto px-4 py-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h1 className="text-3xl font-bold text-white">
+                  <span className="text-[#0fa]">//</span> blogs
+                </h1>
+                <p className="text-gray-500 font-mono text-sm mt-1">thoughts, tutorials, and security findings</p>
+              </div>
+              <a
+                href="https://aniketpandey.website"
+                className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm w-fit"
               >
-                {blog.coverImage && (
-                  <div className="mb-4 overflow-hidden relative h-48">
-                    <ProgressiveImage
-                      src={blog.coverImage}
-                      alt={blog.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 768px"
-                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                )}
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-xl font-bold text-white group-hover:text-[#0fa] transition-colors flex items-center gap-2">
-                      {blog.title}
-                      <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </h2>
-                    <p className="text-gray-400 text-sm mt-2 line-clamp-2">
-                      {getPlainTextPreview(blog.body)}...
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 mt-4 text-gray-500 font-mono text-xs">
-                  <Calendar className="w-3 h-3" />
-                  {new Date(blog.createdAt).toLocaleDateString()}
-                </div>
-              </Link>
-            ))}
+                portfolio
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
           </div>
-        )}
-      </main>
+        </header>
 
-      <footer className="border-t border-[#0fa]/10 py-6">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-gray-500 font-mono text-xs">
-            <span className="text-[#0fa]">$</span> echo "Built by Aniket Pandey"
-          </p>
-        </div>
-      </footer>
-    </div>
+        <main className="max-w-4xl mx-auto px-4 py-12">
+          {publishedBlogs.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 font-mono">$ no posts yet</p>
+              <p className="text-gray-600 text-sm mt-2">Check back soon!</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {publishedBlogs.map((blog: BlogData) => (
+                <Link
+                  key={blog._id}
+                  href={`/${blog.slug}`}
+                  className="block hacker-card p-6 group hover:border-[#0fa]/40 transition-all"
+                >
+                  {blog.coverImage && (
+                    <div className="mb-4 overflow-hidden relative h-48">
+                      <ProgressiveImage
+                        src={blog.coverImage}
+                        alt={blog.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 768px"
+                        className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                      />
+                    </div>
+                  )}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h2 className="text-xl font-bold text-white group-hover:text-[#0fa] transition-colors flex items-center gap-2">
+                        {blog.title}
+                        <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </h2>
+                      <p className="text-gray-400 text-sm mt-2 line-clamp-2">
+                        {getPlainTextPreview(blog.body)}...
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mt-4 text-gray-500 font-mono text-xs">
+                    <Calendar className="w-3 h-3" />
+                    {new Date(blog.createdAt).toLocaleDateString()}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </main>
+
+        <footer className="border-t border-[#0fa]/10 py-6">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <p className="text-gray-500 font-mono text-xs">
+              <span className="text-[#0fa]">$</span> echo "Built by Aniket Pandey"
+            </p>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }
