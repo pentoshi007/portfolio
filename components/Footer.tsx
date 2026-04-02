@@ -20,7 +20,7 @@ export default function Footer() {
             <nav className="flex flex-wrap md:justify-center gap-4 text-xs font-mono" aria-label="Footer navigation">
               <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
               <a href="#skills" className="text-gray-300 hover:text-white transition-colors">Arsenal</a>
-              <a href="/blogs" className="text-[#0fa] hover:text-white transition-colors underline underline-offset-4 decoration-[#0fa]/30">Blogs</a>
+              <a href="https://blogs.aniketpandey.website" className="text-[#0fa] hover:text-white transition-colors underline underline-offset-4 decoration-[#0fa]/30">Blogs</a>
               <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
             </nav>
           </div>

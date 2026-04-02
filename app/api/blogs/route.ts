@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { isAuthenticated } from '@/lib/auth';
 import { validateBlogInput } from '@/lib/validation';
+import { revalidateBlogRoutes } from '@/lib/revalidateBlogRoutes';
 
 // Disable caching for this API route
 export const dynamic = 'force-dynamic';
@@ -76,9 +76,8 @@ export async function POST(request: NextRequest) {
       published: published || false,
     });
 
-    revalidatePath('/');
     if (published) {
-      revalidatePath(`/${slug}`);
+      revalidateBlogRoutes([slug]);
     }
 
     return NextResponse.json(newBlog, { status: 201 });

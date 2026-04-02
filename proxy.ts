@@ -118,6 +118,10 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  if (pathname === '/robots.txt') {
+    return NextResponse.next();
+  }
+
   // 4. SUBDOMAIN ROUTING
   const mainDomain = 'aniketpandey.website';
   const adminDomain = `admin.${mainDomain}`;

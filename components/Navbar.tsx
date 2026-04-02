@@ -11,7 +11,7 @@ const navItems = [
   { label: 'certs', href: '#certifications' },
   { label: 'stats', href: '#stats' },
   { label: 'ping', href: '#contact' },
-  { label: 'blogs', href: '/blogs' },
+  { label: 'blogs', href: 'https://blogs.aniketpandey.website' },
 ];
 
 export default function Navbar() {

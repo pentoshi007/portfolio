@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import { isAuthenticated } from '@/lib/auth';
-import { isValidObjectId, isValidSlug, validateBlogInput, sanitizeForDB } from '@/lib/validation';
+import { isValidObjectId, isValidSlug, sanitizeForDB } from '@/lib/validation';
+import { revalidateBlogRoutes } from '@/lib/revalidateBlogRoutes';
 
 // Disable caching
 export const dynamic = 'force-dynamic';
@@ -69,6 +69,12 @@ export async function PUT(
       return NextResponse.json({ error: 'Invalid blog ID' }, { status: 400 });
     }
     
+    const existingBlog = await Blog.findById(id).select('slug published').lean();
+
+    if (!existingBlog) {
+      return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
+    }
+
     let body;
     try {
       body = await request.json();
@@ -112,8 +118,9 @@ export async function PUT(
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
 
-    revalidatePath('/');
-    revalidatePath(`/${(blog as any).slug}`);
+    if ((existingBlog as any).published || (blog as any).published) {
+      revalidateBlogRoutes([(existingBlog as any).slug, (blog as any).slug]);
+    }
     
     return NextResponse.json(blog);
   } catch (error) {
@@ -147,9 +154,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
 
-    revalidatePath('/');
-    revalidatePath(`/${(blog as any).slug}`);
-    
+    if (blog.published) {
+      revalidateBlogRoutes([blog.slug]);
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting blog:', error);

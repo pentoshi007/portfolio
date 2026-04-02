@@ -11,8 +11,9 @@ import Footer from '@/components/Footer';
 import ScanlineEffect from '@/components/ScanlineEffect';
 import GridBackground from '@/components/GridBackground';
 import VisualEffects from '@/components/VisualEffects';
+import LatestBlogPosts from '@/components/LatestBlogPosts';
 
-export const revalidate = false;
+export const revalidate = 300;
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
           <Skills />
           <Experience />
           <Projects />
+          <LatestBlogPosts />
           <Certifications />
           <Stats />
           <Contact />
