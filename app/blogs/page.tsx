@@ -6,11 +6,11 @@ import { Metadata } from 'next';
 import ProgressiveImage from '@/components/ProgressiveImage';
 
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, MERN stack tutorials, security research, and programming insights.',
+  title: 'Blogs',
+  description: 'Technical blogs by Aniket Pandey covering cybersecurity, penetration testing, web development, MERN stack tutorials, security research, and programming insights.',
   keywords: [
     'Aniket Pandey',
-    'Aniket Pandey blog',
+    'Aniket Pandey blogs',
     'Aniket Pandey website',
     'cybersecurity blog',
     'penetration testing tutorials',
@@ -32,22 +32,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://blogs.aniketpandey.website',
-    siteName: 'Aniket Pandey Blog',
-    title: 'Blog | Aniket Pandey - Cybersecurity & Web Development',
-    description: 'Technical blog covering cybersecurity, penetration testing, web development tutorials, and security research by Aniket Pandey.',
+    siteName: 'Aniket Pandey Blogs',
+    title: 'Blogs | Aniket Pandey - Cybersecurity & Web Development',
+    description: 'Technical blogs covering cybersecurity, penetration testing, web development tutorials, and security research by Aniket Pandey.',
     images: [
       {
         url: 'https://blogs.aniketpandey.website/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'Aniket Pandey Blog',
+        alt: 'Aniket Pandey Blogs',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | Aniket Pandey',
-    description: 'Technical blog covering cybersecurity, penetration testing, and web development.',
+    title: 'Blogs | Aniket Pandey',
+    description: 'Technical blogs covering cybersecurity, penetration testing, and web development.',
     creator: '@thelunatic_ak_',
     images: ['https://blogs.aniketpandey.website/og-default.png'],
   },
@@ -119,9 +119,9 @@ export default async function BlogsPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Aniket Pandey Blog',
+    name: 'Aniket Pandey Blogs',
     url: 'https://blogs.aniketpandey.website',
-    description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
+    description: 'Technical blogs by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
     author: {
       '@type': 'Person',
       name: 'Aniket Pandey',

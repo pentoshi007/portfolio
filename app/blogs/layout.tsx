@@ -3,10 +3,10 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   metadataBase: new URL('https://blogs.aniketpandey.website'),
   title: {
-    default: 'Aniket Pandey Blog',
-    template: '%s | Aniket Pandey Blog',
+    default: 'Aniket Pandey Blogs',
+    template: '%s | Aniket Pandey Blogs',
   },
-  description: 'Technical blog by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
+  description: 'Technical blogs by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
   authors: [{ name: 'Aniket Pandey' }],
   creator: 'Aniket Pandey',
   alternates: {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://blogs.aniketpandey.website',
-    siteName: 'Aniket Pandey Blog',
+    siteName: 'Aniket Pandey Blogs',
   },
   twitter: {
     card: 'summary_large_image',

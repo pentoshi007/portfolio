@@ -101,7 +101,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       title: blogTitle,
       description,
       url: blogUrl,
-      siteName: 'Aniket Pandey Blog',
+      siteName: 'Aniket Pandey Blogs',
       publishedTime: createdAt ? new Date(createdAt).toISOString() : undefined,
       modifiedTime: updatedAt ? new Date(updatedAt).toISOString() : undefined,
       authors: ['Aniket Pandey'],
