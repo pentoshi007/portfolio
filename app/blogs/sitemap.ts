@@ -2,7 +2,8 @@ import { MetadataRoute } from 'next';
 import dbConnect from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://blogs.aniketpandey.website';
