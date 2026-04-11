@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 export function revalidateBlogRoutes(slugs: string[] = []) {
   const paths = new Set<string>([
     '/',
+    '/blog-sitemap.xml',
     '/blogs',
     '/sitemap.xml',
     '/blogs/sitemap.xml',

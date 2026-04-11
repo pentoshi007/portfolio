@@ -156,7 +156,7 @@ export default function middleware(request: NextRequest) {
   // Blogs subdomain routing
   if (hostname.startsWith('blogs.')) {
     if (pathname === '/sitemap.xml') {
-      return NextResponse.rewrite(new URL('/blogs/sitemap.xml', request.url));
+      return NextResponse.rewrite(new URL('/blog-sitemap.xml', request.url));
     }
 
     // If someone hits blogs.<domain>/blogs/*, redirect to the canonical path without /blogs
