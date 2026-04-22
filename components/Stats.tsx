@@ -103,7 +103,7 @@ export default function Stats() {
                   Actively learning offensive security through hands-on labs and CTF challenges.
                 </p>
                 <a 
-                  href="https://tryhackme.com/p/aniket00736" 
+                  href="https://tryhackme.com/p/pentoshi" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="font-mono text-xs text-gray-400 hover:text-[#0fa] transition-colors flex items-center gap-2"
