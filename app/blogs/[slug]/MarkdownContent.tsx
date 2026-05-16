@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { Components } from 'react-markdown';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Components } from "react-markdown";
+import Image from "next/image";
 
 interface MarkdownContentProps {
   content: string;
@@ -11,20 +12,20 @@ interface MarkdownContentProps {
 function generateSlug(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
     .trim();
 }
 
 function extractText(children: React.ReactNode): string {
-  if (typeof children === 'string') return children;
-  if (Array.isArray(children)) return children.map(extractText).join('');
-  if (children && typeof children === 'object' && 'props' in children) {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) return children.map(extractText).join("");
+  if (children && typeof children === "object" && "props" in children) {
     const element = children as { props?: { children?: React.ReactNode } };
     return extractText(element.props?.children);
   }
-  return '';
+  return "";
 }
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
@@ -32,37 +33,84 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
     h1: ({ children }) => {
       const text = extractText(children);
       const id = generateSlug(text);
-      return <h1 id={id} className="text-3xl font-bold text-white mt-8 mb-4 scroll-mt-24">{children}</h1>;
+      return (
+        <h1
+          id={id}
+          className="text-3xl font-bold text-white mt-8 mb-4 scroll-mt-24"
+        >
+          {children}
+        </h1>
+      );
     },
     h2: ({ children }) => {
       const text = extractText(children);
       const id = generateSlug(text);
-      return <h2 id={id} className="text-2xl font-bold text-[#0fa] mt-8 mb-4 border-b border-[#0fa]/20 pb-2 scroll-mt-24">{children}</h2>;
+      return (
+        <h2
+          id={id}
+          className="text-2xl font-bold text-[#0fa] mt-8 mb-4 border-b border-[#0fa]/20 pb-2 scroll-mt-24"
+        >
+          {children}
+        </h2>
+      );
     },
     h3: ({ children }) => {
       const text = extractText(children);
       const id = generateSlug(text);
-      return <h3 id={id} className="text-xl font-semibold text-white mt-6 mb-3 scroll-mt-24">{children}</h3>;
+      return (
+        <h3
+          id={id}
+          className="text-xl font-semibold text-white mt-6 mb-3 scroll-mt-24"
+        >
+          {children}
+        </h3>
+      );
     },
     h4: ({ children }) => {
       const text = extractText(children);
       const id = generateSlug(text);
-      return <h4 id={id} className="text-lg font-semibold text-gray-200 mt-4 mb-2 scroll-mt-24">{children}</h4>;
+      return (
+        <h4
+          id={id}
+          className="text-lg font-semibold text-gray-200 mt-4 mb-2 scroll-mt-24"
+        >
+          {children}
+        </h4>
+      );
     },
     p: ({ children }) => (
       <p className="text-gray-300 leading-relaxed my-4">{children}</p>
     ),
     a: ({ href, children }) => (
-      <a href={href} className="text-[#0fa] hover:underline break-all" target="_blank" rel="noopener noreferrer">
+      <a
+        href={href}
+        className="text-[#0fa] hover:underline break-all"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {children}
       </a>
     ),
+    img: ({ src, alt }) => {
+      if (!src || typeof src !== "string") return null;
+
+      return (
+        <span className="block my-6 overflow-hidden rounded-lg border border-[#0fa]/20 bg-[#111118]">
+          <Image
+            src={src}
+            alt={alt || ""}
+            width={1200}
+            height={675}
+            sizes="(max-width: 768px) 100vw, 896px"
+            className="h-auto w-full object-contain"
+          />
+        </span>
+      );
+    },
     strong: ({ children }) => (
       <strong className="text-white font-semibold">{children}</strong>
     ),
-    em: ({ children }) => (
-      <em className="text-gray-300 italic">{children}</em>
-    ),
+    em: ({ children }) => <em className="text-gray-300 italic">{children}</em>,
     code: ({ className, children }) => {
       const isInline = !className;
       if (isInline) {
@@ -72,9 +120,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
           </code>
         );
       }
-      return (
-        <code className={className}>{children}</code>
-      );
+      return <code className={className}>{children}</code>;
     },
     pre: ({ children }) => (
       <pre className="bg-[#111118] border border-[#0fa]/20 rounded-lg p-4 overflow-x-auto my-4 font-mono text-sm">
@@ -82,22 +128,22 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
       </pre>
     ),
     ul: ({ children }) => (
-      <ul className="text-gray-300 my-4 ml-6 list-disc space-y-2">{children}</ul>
+      <ul className="text-gray-300 my-4 ml-6 list-disc space-y-2">
+        {children}
+      </ul>
     ),
     ol: ({ children }) => (
-      <ol className="text-gray-300 my-4 ml-6 list-decimal space-y-2">{children}</ol>
+      <ol className="text-gray-300 my-4 ml-6 list-decimal space-y-2">
+        {children}
+      </ol>
     ),
-    li: ({ children }) => (
-      <li className="text-gray-300">{children}</li>
-    ),
+    li: ({ children }) => <li className="text-gray-300">{children}</li>,
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-[#0fa] pl-4 my-4 text-gray-400 italic">
         {children}
       </blockquote>
     ),
-    hr: () => (
-      <hr className="border-[#0fa]/20 my-8" />
-    ),
+    hr: () => <hr className="border-[#0fa]/20 my-8" />,
     table: ({ children }) => (
       <div className="overflow-x-auto my-4">
         <table className="min-w-full border border-[#0fa]/20">{children}</table>
@@ -109,7 +155,9 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
       </th>
     ),
     td: ({ children }) => (
-      <td className="px-4 py-2 text-gray-300 border border-[#0fa]/20">{children}</td>
+      <td className="px-4 py-2 text-gray-300 border border-[#0fa]/20">
+        {children}
+      </td>
     ),
   };
 

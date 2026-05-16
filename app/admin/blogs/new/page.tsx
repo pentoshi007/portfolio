@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Image as ImageIcon } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Save, Image as ImageIcon } from "lucide-react";
+import BlogMarkdownEditor from "@/components/BlogMarkdownEditor";
 
 export default function NewBlogPage() {
   const [blog, setBlog] = useState({
-    title: '',
-    body: '',
-    coverImage: '',
+    title: "",
+    body: "",
+    coverImage: "",
     published: false,
   });
   const [saving, setSaving] = useState(false);
@@ -19,17 +20,17 @@ export default function NewBlogPage() {
     setSaving(true);
 
     try {
-      const res = await fetch('/api/blogs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(blog),
       });
 
       if (res.ok) {
-        router.push('/admin');
+        router.push("/admin");
       }
     } catch (error) {
-      console.error('Failed to create blog:', error);
+      console.error("Failed to create blog:", error);
     } finally {
       setSaving(false);
     }
@@ -53,7 +54,9 @@ export default function NewBlogPage() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="font-mono text-[10px] text-gray-500 block mb-2">TITLE</label>
+            <label className="font-mono text-[10px] text-gray-500 block mb-2">
+              TITLE
+            </label>
             <input
               type="text"
               value={blog.title}
@@ -65,13 +68,17 @@ export default function NewBlogPage() {
           </div>
 
           <div>
-            <label className="font-mono text-[10px] text-gray-500 block mb-2">COVER IMAGE URL</label>
+            <label className="font-mono text-[10px] text-gray-500 block mb-2">
+              COVER IMAGE URL
+            </label>
             <div className="relative">
               <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="url"
                 value={blog.coverImage}
-                onChange={(e) => setBlog({ ...blog, coverImage: e.target.value })}
+                onChange={(e) =>
+                  setBlog({ ...blog, coverImage: e.target.value })
+                }
                 className="w-full pl-10 pr-4 py-2.5 bg-[#0a0a0f] border border-[#0fa]/20 text-white text-sm focus:border-[#0fa] focus:outline-none"
                 placeholder="https://example.com/image.jpg"
               />
@@ -79,13 +86,13 @@ export default function NewBlogPage() {
           </div>
 
           <div>
-            <label className="font-mono text-[10px] text-gray-500 block mb-2">CONTENT (Markdown supported)</label>
-            <textarea
+            <label className="font-mono text-[10px] text-gray-500 block mb-2">
+              CONTENT (Markdown supported)
+            </label>
+            <BlogMarkdownEditor
               value={blog.body}
-              onChange={(e) => setBlog({ ...blog, body: e.target.value })}
-              required
+              onChange={(body) => setBlog({ ...blog, body })}
               rows={20}
-              className="w-full px-4 py-3 bg-[#0a0a0f] border border-[#0fa]/20 text-white text-sm font-mono focus:border-[#0fa] focus:outline-none resize-none"
               placeholder="Write your blog content here..."
             />
           </div>
@@ -95,10 +102,15 @@ export default function NewBlogPage() {
               type="checkbox"
               id="published"
               checked={blog.published}
-              onChange={(e) => setBlog({ ...blog, published: e.target.checked })}
+              onChange={(e) =>
+                setBlog({ ...blog, published: e.target.checked })
+              }
               className="w-4 h-4 accent-[#0fa]"
             />
-            <label htmlFor="published" className="text-gray-400 text-sm font-mono">
+            <label
+              htmlFor="published"
+              className="text-gray-400 text-sm font-mono"
+            >
               Publish immediately
             </label>
           </div>
@@ -110,7 +122,7 @@ export default function NewBlogPage() {
               className="flex items-center gap-2 px-6 py-3 bg-[#0fa] text-[#0a0a0f] font-mono text-sm font-medium hover:bg-[#0fa]/90 transition-colors disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
-              {saving ? 'saving...' : 'save blog'}
+              {saving ? "saving..." : "save blog"}
             </button>
             <button
               type="button"
