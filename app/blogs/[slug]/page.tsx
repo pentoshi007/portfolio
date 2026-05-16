@@ -187,7 +187,7 @@ export default async function BlogPostPage({ params, searchParams }: PageProps) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-[#0a0a0f] overflow-x-hidden">
+      <div className="min-h-screen bg-[#0a0a0f]">
       {isPreview && (
         <div className="bg-amber-500/20 border-b border-amber-500/40 py-2">
           <div className="max-w-3xl mx-auto px-4">
@@ -197,7 +197,7 @@ export default async function BlogPostPage({ params, searchParams }: PageProps) 
           </div>
         </div>
       )}
-      <header className="border-b border-[#0fa]/20 bg-[#0a0a0f]/95 sticky top-0 z-10 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 border-b border-[#0fa]/20 bg-[#0a0a0f]/95 backdrop-blur-md supports-[backdrop-filter]:bg-[#0a0a0f]/85">
         <div className="max-w-3xl mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0fa] transition-colors font-mono text-sm">
             <ArrowLeft className="w-4 h-4" />
