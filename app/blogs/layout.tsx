@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     default: 'Aniket Pandey Blogs',
     template: '%s | Aniket Pandey Blogs',
   },
-  description: 'Technical blogs by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
+  description: 'Blogs by Aniket Pandey with writeups, tutorials, notes, and practical lessons from things he is learning and building.',
   authors: [{ name: 'Aniket Pandey' }],
   creator: 'Aniket Pandey',
   alternates: {

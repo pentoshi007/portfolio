@@ -7,7 +7,7 @@ import ProgressiveImage from '@/components/ProgressiveImage';
 
 export const metadata: Metadata = {
   title: 'Blogs',
-  description: 'Technical blogs by Aniket Pandey covering cybersecurity, penetration testing, web development, MERN stack tutorials, security research, and programming insights.',
+  description: 'Blogs by Aniket Pandey with writeups, tutorials, notes, and practical lessons from things he is learning and building.',
   keywords: [
     'Aniket Pandey',
     'Aniket Pandey blogs',
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://blogs.aniketpandey.website',
     siteName: 'Aniket Pandey Blogs',
-    title: 'Blogs | Aniket Pandey - Cybersecurity & Web Development',
-    description: 'Technical blogs covering cybersecurity, penetration testing, web development tutorials, and security research by Aniket Pandey.',
+    title: 'Blogs and Notes | Aniket Pandey',
+    description: 'Writeups, tutorials, notes, and practical lessons from things Aniket Pandey is learning and building.',
     images: [
       {
         url: 'https://blogs.aniketpandey.website/og-default.png',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Blogs | Aniket Pandey',
-    description: 'Technical blogs covering cybersecurity, penetration testing, and web development.',
+    description: 'Writeups, tutorials, notes, and practical lessons from things Aniket Pandey is learning and building.',
     creator: '@thelunatic_ak_',
     images: ['https://blogs.aniketpandey.website/og-default.png'],
   },
@@ -135,7 +135,7 @@ export default async function BlogsPage() {
     '@type': 'CollectionPage',
     name: 'Aniket Pandey Blogs',
     url: 'https://blogs.aniketpandey.website',
-    description: 'Technical blogs by Aniket Pandey covering cybersecurity, penetration testing, web development, and security research.',
+    description: 'Blogs by Aniket Pandey with writeups, tutorials, notes, and practical lessons from things he is learning and building.',
     author: {
       '@type': 'Person',
       name: 'Aniket Pandey',
@@ -166,7 +166,7 @@ export default async function BlogsPage() {
                 <h1 className="text-3xl md:text-2xl font-bold text-white tracking-normal">
                   <span className="text-[#0fa]">//</span> blogs
                 </h1>
-                <p className="text-gray-500 font-mono text-sm md:text-xs mt-1">thoughts, tutorials, and security findings</p>
+                <p className="text-gray-500 font-mono text-sm md:text-xs mt-1">writeups, tutorials, and notes</p>
               </div>
               <a
                 href="https://aniketpandey.website"
@@ -193,13 +193,13 @@ export default async function BlogsPage() {
                 <div>
                   <div className="mb-4 inline-flex items-center gap-2 border border-[#0fa]/20 bg-[#0fa]/5 px-3 py-1.5 font-mono text-xs text-[#0fa]">
                     <Radio className="h-3.5 w-3.5" />
-                    live index / {publishedBlogs.length.toString().padStart(2, '0')} entries
+                    {publishedBlogs.length.toString().padStart(2, '0')} posts
                   </div>
                   <h2 id="blog-index-title" className="max-w-3xl text-5xl font-bold leading-tight text-white">
-                    Field notes for security, code, and systems work.
+                    Blogs, writeups, and notes.
                   </h2>
                   <p className="mt-5 max-w-2xl text-base leading-7 text-gray-400">
-                    A compact archive of tutorials, experiments, and implementation notes. The newest write-up stays prominent; the rest are arranged for quick scanning on wide screens.
+                    A simple collection of tutorials, walkthroughs, opinions, and notes from things I am learning or building. Newer posts stay first so the page is easy to skim.
                   </p>
                 </div>
 
@@ -207,7 +207,7 @@ export default async function BlogsPage() {
                   <div className="mb-5 flex items-center justify-between border-b border-[#0fa]/10 pb-3">
                     <div className="flex items-center gap-2 font-mono text-xs text-[#0fa]">
                       <Terminal className="h-4 w-4" />
-                      archive.status
+                      blog summary
                     </div>
                     <span className="status-dot" aria-hidden="true" />
                   </div>
@@ -222,8 +222,8 @@ export default async function BlogsPage() {
                     </div>
                   </dl>
                   <div className="mt-6 border-t border-[#0fa]/10 pt-4 font-mono text-xs leading-6 text-gray-500">
-                    <p><span className="text-[#0fa]">$</span> sort --date desc</p>
-                    <p><span className="text-[#0fa]">$</span> open latest --readable</p>
+                    <p><span className="text-[#0fa]">-</span> newest posts appear first</p>
+                    <p><span className="text-[#0fa]">-</span> short previews for quick scanning</p>
                   </div>
                 </aside>
               </section>
@@ -284,7 +284,7 @@ export default async function BlogsPage() {
                         <div className="flex items-start justify-between gap-4 lg:order-1 lg:mb-4">
                           <div>
                             {isFeatured && (
-                              <p className="mb-3 hidden font-mono text-xs uppercase tracking-[0.24em] text-[#0fa] lg:block">latest dispatch</p>
+                              <p className="mb-3 hidden font-mono text-xs uppercase tracking-[0.24em] text-[#0fa] lg:block">latest post</p>
                             )}
                             <h2 className={`text-xl font-bold text-white group-hover:text-[#0fa] transition-colors flex items-start gap-2 ${isFeatured ? 'lg:text-3xl lg:leading-tight' : 'lg:text-lg lg:leading-snug'}`}>
                               {blog.title}
