@@ -1,16 +1,29 @@
 "use client";
 
-import { ChangeEvent, ReactNode, useRef, useState } from "react";
 import {
+  ChangeEvent,
+  ClipboardEvent,
+  DragEvent,
+  KeyboardEvent,
+  ReactNode,
+  useRef,
+  useState,
+} from "react";
+import {
+  AlertTriangle,
   Bold,
+  CheckSquare,
   Code2,
   Heading2,
   Image as ImageIcon,
   Italic,
   Link,
   List,
+  ListOrdered,
   Loader2,
+  Minus,
   Quote,
+  Table2,
 } from "lucide-react";
 
 interface BlogMarkdownEditorProps {
@@ -26,6 +39,13 @@ interface ToolbarAction {
   onClick: () => void;
   disabled?: boolean;
 }
+
+const IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
 
 export default function BlogMarkdownEditor({
   value,
@@ -63,18 +83,26 @@ export default function BlogMarkdownEditor({
     updateTextarea(nextValue, cursorPosition);
   };
 
-  const insertSnippet = (snippet: string) => {
+  const insertSnippetAt = (snippet: string, position?: number) => {
     const textarea = textareaRef.current;
     if (!textarea) {
       onChange(`${value}${snippet}`);
       return;
     }
 
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const nextValue = `${value.slice(0, start)}${snippet}${value.slice(end)}`;
+    const currentValue = textarea.value;
+    const start = Math.min(
+      position ?? textarea.selectionStart,
+      currentValue.length,
+    );
+    const end = position === undefined ? textarea.selectionEnd : start;
+    const nextValue = `${currentValue.slice(0, start)}${snippet}${currentValue.slice(end)}`;
 
     updateTextarea(nextValue, start + snippet.length);
+  };
+
+  const insertSnippet = (snippet: string) => {
+    insertSnippetAt(snippet);
   };
 
   const insertLinePrefix = (prefix: string, fallback: string) => {
@@ -123,11 +151,11 @@ export default function BlogMarkdownEditor({
     insertSnippet(`\n![${alt}](${url})\n`);
   };
 
-  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-
-    if (!file) return;
+  const uploadFile = async (file: File, insertAt?: number) => {
+    if (!IMAGE_TYPES.has(file.type)) {
+      setUploadError("Only JPG, PNG, WebP, and GIF images are allowed");
+      return;
+    }
 
     setUploadError("");
     setUploading(true);
@@ -150,7 +178,7 @@ export default function BlogMarkdownEditor({
       const alt =
         file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ") ||
         "blog image";
-      insertSnippet(`\n![${alt}](${result.url})\n`);
+      insertSnippetAt(`\n![${alt}](${result.url})\n`, insertAt);
     } catch (error) {
       setUploadError(
         error instanceof Error ? error.message : "Image upload failed",
@@ -159,6 +187,61 @@ export default function BlogMarkdownEditor({
       setUploading(false);
     }
   };
+
+  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) return;
+
+    await uploadFile(file, textareaRef.current?.selectionStart);
+  };
+
+  const handlePaste = async (event: ClipboardEvent<HTMLTextAreaElement>) => {
+    const image = Array.from(event.clipboardData.files).find((file) =>
+      IMAGE_TYPES.has(file.type),
+    );
+
+    if (!image) return;
+
+    const insertAt = event.currentTarget.selectionStart;
+    event.preventDefault();
+    await uploadFile(image, insertAt);
+  };
+
+  const handleDrop = async (event: DragEvent<HTMLTextAreaElement>) => {
+    const image = Array.from(event.dataTransfer.files).find((file) =>
+      IMAGE_TYPES.has(file.type),
+    );
+
+    if (!image) return;
+
+    const insertAt = event.currentTarget.selectionStart;
+    event.preventDefault();
+    await uploadFile(image, insertAt);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!(event.metaKey || event.ctrlKey)) return;
+
+    if (event.key.toLowerCase() === "b") {
+      event.preventDefault();
+      insertText("**", "**", "bold text");
+    }
+
+    if (event.key.toLowerCase() === "i") {
+      event.preventDefault();
+      insertText("*", "*", "italic text");
+    }
+
+    if (event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      insertLink();
+    }
+  };
+
+  const wordCount = value.trim() ? value.trim().split(/\s+/).length : 0;
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
   const actions: ToolbarAction[] = [
     {
@@ -207,6 +290,32 @@ export default function BlogMarkdownEditor({
       onClick: () => insertLinePrefix("- ", "List item"),
     },
     {
+      label: "numbered",
+      icon: <ListOrdered className="w-4 h-4" />,
+      onClick: () => insertLinePrefix("1. ", "Step"),
+    },
+    {
+      label: "task",
+      icon: <CheckSquare className="w-4 h-4" />,
+      onClick: () => insertLinePrefix("- [ ] ", "Task item"),
+    },
+    {
+      label: "important",
+      icon: <AlertTriangle className="w-4 h-4" />,
+      onClick: () => insertLinePrefix("> **Important:** ", "Key point"),
+    },
+    {
+      label: "divider",
+      icon: <Minus className="w-4 h-4" />,
+      onClick: () => insertSnippet("\n---\n"),
+    },
+    {
+      label: "table",
+      icon: <Table2 className="w-4 h-4" />,
+      onClick: () =>
+        insertSnippet("\n| Item | Notes |\n| --- | --- |\n|  |  |\n"),
+    },
+    {
       label: "code block",
       icon: <Code2 className="w-4 h-4" />,
       onClick: () => insertText("\n```bash\n", "\n```\n", "command here"),
@@ -251,11 +360,24 @@ export default function BlogMarkdownEditor({
         ref={textareaRef}
         value={value}
         onChange={(event) => onChange(event.target.value)}
+        onPaste={handlePaste}
+        onDrop={handleDrop}
+        onDragOver={(event) => event.preventDefault()}
+        onKeyDown={handleKeyDown}
         required
         rows={rows}
         className="w-full resize-none bg-[#0a0a0f] px-4 py-3 font-mono text-sm text-white focus:outline-none"
         placeholder={placeholder}
       />
+
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#0fa]/20 bg-[#111118] px-3 py-2 font-mono text-[11px] text-gray-500">
+        <span>
+          {wordCount} words · {readingTime} min read · {value.length} chars
+        </span>
+        <span>
+          Paste or drop screenshots directly · shortcuts: ⌘/Ctrl+B, I, K
+        </span>
+      </div>
     </div>
   );
 }

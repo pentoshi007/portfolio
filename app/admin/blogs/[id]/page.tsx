@@ -56,7 +56,7 @@ export default function EditBlogPage({ params }: PageProps) {
       });
 
       if (res.ok) {
-        router.push("/admin");
+        router.push("/admin?tab=blogs");
       }
     } catch (error) {
       console.error("Failed to update blog:", error);

@@ -1,13 +1,20 @@
-import { redirect } from 'next/navigation';
-import { isAuthenticated } from '@/lib/auth';
-import AdminDashboard from './AdminDashboard';
+import { redirect } from "next/navigation";
+import { isAuthenticated } from "@/lib/auth";
+import AdminDashboard from "./AdminDashboard";
 
-export default async function AdminPage() {
+interface AdminPageProps {
+  searchParams: Promise<{ tab?: string }>;
+}
+
+export default async function AdminPage({ searchParams }: AdminPageProps) {
   const authenticated = await isAuthenticated();
-  
+
   if (!authenticated) {
-    redirect('/login');
+    redirect("/login");
   }
 
-  return <AdminDashboard />;
+  const { tab } = await searchParams;
+  const initialTab = tab === "blogs" ? "blogs" : "messages";
+
+  return <AdminDashboard initialTab={initialTab} />;
 }

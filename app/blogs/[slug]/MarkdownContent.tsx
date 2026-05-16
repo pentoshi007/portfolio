@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Components } from "react-markdown";
 import Image from "next/image";
+import { ReactNode, useState } from "react";
+import { Check, Copy } from "lucide-react";
 
 interface MarkdownContentProps {
   content: string;
@@ -18,14 +20,64 @@ function generateSlug(text: string): string {
     .trim();
 }
 
-function extractText(children: React.ReactNode): string {
+function extractText(children: ReactNode): string {
   if (typeof children === "string") return children;
   if (Array.isArray(children)) return children.map(extractText).join("");
   if (children && typeof children === "object" && "props" in children) {
-    const element = children as { props?: { children?: React.ReactNode } };
+    const element = children as { props?: { children?: ReactNode } };
     return extractText(element.props?.children);
   }
   return "";
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyText = async () => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1400);
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={copyText}
+      className="absolute right-2 top-2 flex items-center gap-1 rounded border border-[#0fa]/20 bg-[#0a0a0f]/90 px-2 py-1 font-mono text-[11px] text-gray-400 transition-colors hover:border-[#0fa]/50 hover:text-[#0fa]"
+      title="Copy"
+    >
+      {copied ? (
+        <Check className="h-3.5 w-3.5" />
+      ) : (
+        <Copy className="h-3.5 w-3.5" />
+      )}
+      {copied ? "copied" : "copy"}
+    </button>
+  );
+}
+
+function CopyablePre({ children }: { children: ReactNode }) {
+  const text = extractText(children);
+
+  return (
+    <div className="relative my-4">
+      <CopyButton text={text} />
+      <pre className="bg-[#111118] border border-[#0fa]/20 rounded-lg p-4 pr-24 overflow-x-auto font-mono text-sm">
+        {children}
+      </pre>
+    </div>
+  );
+}
+
+function CopyableBlockquote({ children }: { children: ReactNode }) {
+  const text = extractText(children);
+
+  return (
+    <blockquote className="relative border-l-4 border-[#0fa] bg-[#0fa]/5 py-2 pl-4 pr-24 my-4 text-gray-300 italic">
+      <CopyButton text={text} />
+      {children}
+    </blockquote>
+  );
 }
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
@@ -122,11 +174,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
       }
       return <code className={className}>{children}</code>;
     },
-    pre: ({ children }) => (
-      <pre className="bg-[#111118] border border-[#0fa]/20 rounded-lg p-4 overflow-x-auto my-4 font-mono text-sm">
-        {children}
-      </pre>
-    ),
+    pre: ({ children }) => <CopyablePre>{children}</CopyablePre>,
     ul: ({ children }) => (
       <ul className="text-gray-300 my-4 ml-6 list-disc space-y-2">
         {children}
@@ -139,9 +187,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
     ),
     li: ({ children }) => <li className="text-gray-300">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-[#0fa] pl-4 my-4 text-gray-400 italic">
-        {children}
-      </blockquote>
+      <CopyableBlockquote>{children}</CopyableBlockquote>
     ),
     hr: () => <hr className="border-[#0fa]/20 my-8" />,
     table: ({ children }) => (

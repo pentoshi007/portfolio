@@ -27,7 +27,7 @@ export default function NewBlogPage() {
       });
 
       if (res.ok) {
-        router.push("/admin");
+        router.push("/admin?tab=blogs");
       }
     } catch (error) {
       console.error("Failed to create blog:", error);
