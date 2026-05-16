@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     template: '%s | Aniket Pandey Blogs',
   },
   description: 'Blogs by Aniket Pandey with writeups, tutorials, notes, and practical lessons from things he is learning and building.',
+  keywords: null,
   authors: [{ name: 'Aniket Pandey' }],
   creator: 'Aniket Pandey',
   alternates: {

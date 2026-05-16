@@ -133,13 +133,13 @@ export default function middleware(request: NextRequest) {
       const newUrl = new URL(url.toString());
       newUrl.hostname = adminDomain;
       newUrl.pathname = pathname.replace('/admin', '') || '/';
-      return NextResponse.redirect(newUrl);
+      return NextResponse.redirect(newUrl, 308);
     }
     if (pathname.startsWith('/blogs')) {
       const newUrl = new URL(url.toString());
       newUrl.hostname = blogsDomain;
       newUrl.pathname = pathname.replace('/blogs', '') || '/';
-      return NextResponse.redirect(newUrl);
+      return NextResponse.redirect(newUrl, 308);
     }
   }
 

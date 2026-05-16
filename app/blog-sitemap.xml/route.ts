@@ -13,28 +13,46 @@ function escapeXml(value: string) {
     .replace(/'/g, '&apos;');
 }
 
+function formatLastmod(value?: Date): string | null {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
 export async function GET() {
   const baseUrl = 'https://blogs.aniketpandey.website';
 
   await dbConnect();
   const blogs = await Blog.find({ published: true })
-    .select('slug updatedAt')
+    .select('slug createdAt updatedAt')
+    .sort({ updatedAt: -1 })
     .lean();
+
+  const blogEntries = blogs as Array<{ slug: string; createdAt?: Date; updatedAt?: Date }>;
+  const latestModified = blogEntries.reduce<Date | null>((latest, blog) => {
+    const modified = blog.updatedAt || blog.createdAt;
+    const lastmod = formatLastmod(modified);
+    if (!lastmod) return latest;
+    const modifiedDate = new Date(lastmod);
+    return !latest || modifiedDate > latest ? modifiedDate : latest;
+  }, null);
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${escapeXml(baseUrl)}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    ${latestModified ? `<lastmod>${latestModified.toISOString()}</lastmod>` : ''}
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-${blogs
-  .map((blog: { slug: string; updatedAt: Date }) => {
+${blogEntries
+  .map((blog) => {
     const url = `${baseUrl}/${blog.slug}`;
+    const modified = blog.updatedAt || blog.createdAt;
+    const formattedLastmod = formatLastmod(modified);
+    const lastmod = formattedLastmod ? `\n    <lastmod>${formattedLastmod}</lastmod>` : '';
     return `  <url>
-    <loc>${escapeXml(url)}</loc>
-    <lastmod>${new Date(blog.updatedAt).toISOString()}</lastmod>
+    <loc>${escapeXml(url)}</loc>${lastmod}
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>`;

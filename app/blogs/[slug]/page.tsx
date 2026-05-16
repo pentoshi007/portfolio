@@ -67,31 +67,10 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 
   const description = plainText.substring(0, 160);
 
-  const words = plainText.toLowerCase().split(/\s+/);
-  const wordFreq: Record<string, number> = {};
-  const stopWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'shall', 'can', 'need', 'dare', 'ought', 'used', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'what', 'which', 'who', 'whom', 'whose', 'where', 'when', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 'just', 'also', 'now', 'here', 'there', 'then', 'once', 'if', 'as', 'its', 'about', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 'under', 'again', 'further', 'while', 'use', 'using', 'well', 'like', 'new', 'one', 'two', 'first', 'get', 'make']);
-  
-  words.forEach((word: string) => {
-    if (word.length > 3 && !stopWords.has(word) && !/^\d+$/.test(word)) {
-      wordFreq[word] = (wordFreq[word] || 0) + 1;
-    }
-  });
-  
-  const keywords = Object.entries(wordFreq)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 10)
-    .map((entry) => entry[0]);
-
-  const allKeywords = [
-    'Aniket Pandey',
-    blogTitle,
-    ...keywords,
-  ];
-
   return {
     title: blogTitle,
     description,
-    keywords: allKeywords,
+    keywords: null,
     authors: [{ name: 'Aniket Pandey' }],
     creator: 'Aniket Pandey',
     publisher: 'Aniket Pandey',
