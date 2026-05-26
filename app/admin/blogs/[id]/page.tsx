@@ -2,8 +2,9 @@
 
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 import BlogMarkdownEditor from "@/components/BlogMarkdownEditor";
+import CoverImageUploader from "@/components/CoverImageUploader";
 
 interface PageProps {
   params: { id: string };
@@ -106,20 +107,12 @@ export default function EditBlogPage({ params }: PageProps) {
 
           <div>
             <label className="font-mono text-[10px] text-gray-500 block mb-2">
-              COVER IMAGE URL
+              COVER IMAGE
             </label>
-            <div className="relative">
-              <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-              <input
-                type="url"
-                value={blog.coverImage}
-                onChange={(e) =>
-                  setBlog({ ...blog, coverImage: e.target.value })
-                }
-                className="w-full pl-10 pr-4 py-2.5 bg-[#0a0a0f] border border-[#0fa]/20 text-white text-sm focus:border-[#0fa] focus:outline-none"
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
+            <CoverImageUploader
+              value={blog.coverImage}
+              onChange={(coverImage) => setBlog({ ...blog, coverImage })}
+            />
           </div>
 
           <div>
