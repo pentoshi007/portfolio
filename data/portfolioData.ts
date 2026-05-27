@@ -117,6 +117,43 @@ export const education = [
 
 export const projects = [
   {
+    title: "Sentinel SOC Lab",
+    slug: "sentinel-lab",
+    subtitle: "Cloud Security Operations Environment",
+    tech: [
+      "Microsoft Sentinel",
+      "Azure",
+      "KQL",
+      "Azure Arc",
+      "Logic Apps",
+      "MITRE ATT&CK",
+    ],
+    description:
+      "Full SOC pipeline on Azure ingesting real endpoint telemetry into Microsoft Sentinel with custom threat detection and automated incident response.",
+    highlights: [
+      "Onboarded Windows 11 and Ubuntu via Azure Arc and AMA with custom Data Collection Rules",
+      "4 KQL detection rules for brute force, PowerShell abuse, SSH attacks, and impossible-travel logins",
+      "Logic Apps playbook auto-sends enriched SOC email alerts on every new incident",
+    ],
+    github:
+      "https://blogs.aniketpandey.website/building-a-real-soc-lab-with-microsoft-sentinel-from-scratch",
+    live: "https://blogs.aniketpandey.website/building-a-real-soc-lab-with-microsoft-sentinel-from-scratch",
+  },
+  {
+    title: "clai",
+    subtitle: "AI-Powered Pentesting CLI",
+    tech: ["TypeScript", "Node.js", "CLI", "AI", "Pentesting", "npm"],
+    description:
+      "Open-source AI CLI tool built for security workflows, with an agent mode that autonomously executes recon and pentesting tasks in the terminal.",
+    highlights: [
+      "pentest.recon tool chains nmap, whois, and dig; agent mode runs gobuster, ffuf, nikto, sqlmap natively",
+      "Scope-aware target authorization with 3-tier safety classifier blocking destructive commands",
+      "Supports 8 LLM providers (Groq, Gemini, OpenAI, Anthropic, Ollama) with full streaming",
+    ],
+    github: "https://github.com/pentoshi007/clai",
+    live: "https://www.npmjs.com/package/@pentoshi/clai",
+  },
+  {
     title: "HTTP Smuggler",
     subtitle: "Security Testing Tool",
     tech: ["Python", "AsyncIO", "HTTP/2", "Security Testing"],
