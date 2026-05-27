@@ -35,10 +35,10 @@ export default function Projects() {
                   <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
                 </div>
                 <span className="font-mono text-[10px] text-[#0fa]/50 ml-2 hidden sm:inline">
-                  ~/projects/{project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
+                  ~/projects/{(project as { slug?: string }).slug ?? project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
                 </span>
                  <span className="font-mono text-[10px] text-[#0fa]/50 ml-2 sm:hidden">
-                  {project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
+                  {(project as { slug?: string }).slug ?? project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
                 </span>
                 <div className="ml-auto flex gap-2">
                   <a
