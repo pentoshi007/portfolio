@@ -2,10 +2,12 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: '**',
-            },
+            { protocol: 'https', hostname: 'postimg.cc' },
+            { protocol: 'https', hostname: 'i.postimg.cc' },
+            { protocol: 'https', hostname: 'res.cloudinary.com' },
+            { protocol: 'https', hostname: 'aniketpandey.website' },
+            { protocol: 'https', hostname: 'blogs.aniketpandey.website' },
+            { protocol: 'https', hostname: 'admin.aniketpandey.website' },
         ],
         minimumCacheTTL: 60 * 60 * 24,
         formats: ['image/avif', 'image/webp'],
@@ -21,28 +23,10 @@ const nextConfig = {
             'https://blogs.aniketpandey.website',
         ].join(' ');
 
-        const csp = [
-            "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-            "font-src 'self' https://fonts.gstatic.com",
-            "img-src 'self' data: blob: https:",
-            "frame-src https://tryhackme.com",
-            "connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com",
-            "worker-src 'self' blob:",
-            "media-src 'none'",
-            "object-src 'none'",
-            "base-uri 'self'",
-            "form-action 'self'",
-            "frame-ancestors 'none'",
-            "upgrade-insecure-requests",
-        ].join('; ');
-
         return [
             {
                 source: '/:path*',
                 headers: [
-                    { key: 'Content-Security-Policy', value: csp },
                     { key: 'X-DNS-Prefetch-Control', value: 'on' },
                     { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
                     { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -69,7 +53,7 @@ const nextConfig = {
             {
                 source: '/api/og-image',
                 headers: [
-                    { key: 'Access-Control-Allow-Origin', value: '*' },
+                    { key: 'Access-Control-Allow-Origin', value: allowedOrigins },
                 ],
             },
         ];
