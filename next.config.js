@@ -2,10 +2,12 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: '**',
-            },
+            { protocol: 'https', hostname: 'postimg.cc' },
+            { protocol: 'https', hostname: 'i.postimg.cc' },
+            { protocol: 'https', hostname: 'res.cloudinary.com' },
+            { protocol: 'https', hostname: 'aniketpandey.website' },
+            { protocol: 'https', hostname: '*.aniketpandey.website' },
+            { protocol: 'https', hostname: 'images.unsplash.com' },
         ],
         minimumCacheTTL: 60 * 60 * 24,
         formats: ['image/avif', 'image/webp'],
@@ -21,9 +23,12 @@ const nextConfig = {
             'https://blogs.aniketpandey.website',
         ].join(' ');
 
+        // CSP: 'unsafe-inline' retained for script-src (required for JSON-LD
+        // and Next.js inline scripts on statically-rendered pages).
+        // 'unsafe-eval' removed — not needed in production builds.
         const csp = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
+            "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: blob: https:",
@@ -69,7 +74,7 @@ const nextConfig = {
             {
                 source: '/api/og-image',
                 headers: [
-                    { key: 'Access-Control-Allow-Origin', value: '*' },
+                    { key: 'Access-Control-Allow-Origin', value: allowedOrigins },
                 ],
             },
         ];

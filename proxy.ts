@@ -8,6 +8,7 @@ const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_API_REQUESTS = 60; // 60 requests per minute
 const MAX_CONTACT_REQUESTS = 5; // 5 contact submissions per minute
+const MAX_LOGIN_REQUESTS = 5; // 5 login attempts per minute
 
 function getRateLimitKey(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
@@ -99,6 +100,16 @@ export default function middleware(request: NextRequest) {
     // Stricter limit for contact form
     if (pathname === '/api/messages' && request.method === 'POST') {
       if (isRateLimited(`contact:${ip}`, MAX_CONTACT_REQUESTS)) {
+        return NextResponse.json(
+          { error: 'Too many requests. Please try again later.' },
+          { status: 429 }
+        );
+      }
+    }
+
+    // Stricter limit for login brute-force protection
+    if (pathname === '/api/auth/login' && request.method === 'POST') {
+      if (isRateLimited(`login:${ip}`, MAX_LOGIN_REQUESTS)) {
         return NextResponse.json(
           { error: 'Too many requests. Please try again later.' },
           { status: 429 }
