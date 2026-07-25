@@ -56,6 +56,10 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* Firefox */
+  scrollbar-width: none;
+  /* Legacy IE/Edge */
+  -ms-overflow-style: none;
 }
 
 body {
@@ -63,6 +67,8 @@ body {
   background-color: var(--bg-dark);
   color: #c5c5c5;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 ::selection {
@@ -70,17 +76,33 @@ body {
   color: var(--bg-dark);
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+/* ===================================================
+   Hide all scrollbars (content stays scrollable)
+   =================================================== */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-darker);
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--neon);
-  border-radius: 0;
+/* Utility used by horizontally scrollable panels – kept as a no-op
+   alias so existing markup keeps working with hidden scrollbars. */
+.scrollbar-thin {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .font-mono {

@@ -103,7 +103,7 @@ export default function FloatingParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none opacity-100"
+      className="fixed inset-0 overflow-hidden pointer-events-none opacity-100"
       style={{ zIndex: 2 }}
     />
   );

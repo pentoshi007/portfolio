@@ -1,6 +1,6 @@
 export default function GridBackground() {
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
       <div className="absolute inset-0 opacity-30">
         <div
           className="absolute inset-0"
