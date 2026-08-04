@@ -3,7 +3,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Components } from "react-markdown";
-import Image from "next/image";
 import { ReactNode, useState } from "react";
 import { Check, Copy } from "lucide-react";
 
@@ -146,15 +145,18 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
     img: ({ src, alt }) => {
       if (!src || typeof src !== "string") return null;
 
+      // Use native <img> for external URLs to avoid Next.js optimizer failures
+      // (hotlink blocks, bot detection). CSP img-src already restricts to https:.
       return (
         <span className="block my-6 overflow-hidden rounded-lg border border-[#0fa]/20 bg-[#111118]">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={src}
             alt={alt || ""}
-            width={1200}
-            height={675}
-            sizes="(max-width: 768px) 100vw, 896px"
             className="h-auto w-full object-contain"
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
           />
         </span>
       );
