@@ -11,7 +11,7 @@ export default function Footer() {
               <span className="text-white">aniket_pandey</span>
             </div>
             <p className="text-gray-400 text-xs leading-relaxed max-w-xs">
-              Full-Stack Developer and Cybersecurity enthusiast focused on building secure, scalable, and high-performance applications.
+              Full-Stack Developer and Cybersecurity Analyst building secure, scalable web applications and security tooling.
             </p>
           </div>
 
@@ -21,7 +21,10 @@ export default function Footer() {
               <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
               <a href="#skills" className="text-gray-300 hover:text-white transition-colors">Arsenal</a>
               <a href="https://blogs.aniketpandey.website" className="text-[#0fa] hover:text-white transition-colors underline underline-offset-4 decoration-[#0fa]/30">Blogs</a>
+              <a href="#experience" className="text-gray-300 hover:text-white transition-colors">Experience</a>
               <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
+              <a href="#certifications" className="text-gray-300 hover:text-white transition-colors">Certifications</a>
+              <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
             </nav>
           </div>
 

@@ -70,7 +70,7 @@ export default function Contact() {
                 <MapPin className="w-5 h-5 text-[#0fa]" />
                 <div>
                   <p className="font-mono text-[10px] text-gray-500">LOCATION</p>
-                  <p className="text-white text-sm">New Delhi, India</p>
+                  <p className="text-white text-sm">{personalInfo.location}</p>
                 </div>
               </div>
             </div>

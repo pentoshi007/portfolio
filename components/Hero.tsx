@@ -18,8 +18,11 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 pt-20 flex flex-col items-center text-center">
         <div className="mb-8 w-full max-w-4xl mt-10">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
-            <span className="text-white">I&apos;m </span>
-            <GlitchText text="Aniket" className="neon-text" />
+            <span className="sr-only">Aniket Pandey, Full-Stack Developer and Cybersecurity Analyst</span>
+            <span aria-hidden="true">
+              <span className="text-white">I&apos;m </span>
+              <GlitchText text="Aniket" className="neon-text" />
+            </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-500 font-light">

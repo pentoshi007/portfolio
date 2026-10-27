@@ -4,42 +4,15 @@ import { skills } from '@/data/portfolioData';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const categories = [
-  {
-    key: 'frontend',
-    label: 'CLIENT',
-    desc: 'What users see',
-    color: '#0af'
-  },
-  {
-    key: 'backend',
-    label: 'SERVER',
-    desc: 'Cloud & logic',
-    color: '#fa0'
-  },
-  {
-    key: 'databases',
-    label: 'DATA',
-    desc: 'Storage & Schema',
-    color: '#f0f'
-  },
-  {
-    key: 'cybersecurity',
-    label: 'OFFENSE',
-    desc: 'Breaking things',
-    color: '#f55'
-  },
-  {
-    key: 'securityTools',
-    label: 'ARSENAL',
-    desc: 'Tools & Languages',
-    color: '#f0a'
-  },
-  {
-    key: 'devops',
-    label: 'OPS',
-    desc: 'Making it live',
-    color: '#5f5'
-  },
+  { key: 'frontend', label: 'CLIENT', desc: 'What users see', color: '#0af' },
+  { key: 'backend', label: 'SERVER', desc: 'APIs & services', color: '#fa0' },
+  { key: 'databases', label: 'DATA', desc: 'Storage & schema', color: '#f0f' },
+  { key: 'languages', label: 'LANGUAGES', desc: 'What I write in', color: '#ff5' },
+  { key: 'devops', label: 'OPS', desc: 'Making it live', color: '#5f5' },
+  { key: 'ai', label: 'AI', desc: 'Agents & models', color: '#a8f' },
+  { key: 'defense', label: 'DEFENSE', desc: 'Detect & respond', color: '#0fa' },
+  { key: 'cybersecurity', label: 'OFFENSE', desc: 'Breaking things', color: '#f55' },
+  { key: 'securityTools', label: 'TOOLKIT', desc: 'Security tools', color: '#f0a' },
 ];
 
 export default function Skills() {

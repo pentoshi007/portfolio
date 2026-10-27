@@ -1,6 +1,6 @@
 'use client';
 
-import { Github, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { Github, ExternalLink, FileText, ChevronDown, ChevronUp } from 'lucide-react';
 import { projects } from '@/data/portfolioData';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useState } from 'react';
@@ -8,9 +8,10 @@ import { useState } from 'react';
 export default function Projects() {
   const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { elementRef: listRef, isVisible: listVisible } = useScrollAnimation();
-  const [visibleCount, setVisibleCount] = useState(2);
+  const [visibleCount, setVisibleCount] = useState(4);
 
-  const displayedProjects = projects.slice(0, visibleCount);
+  // Render every project so all of them are in the HTML for search engines;
+  // cards beyond visibleCount are only hidden visually until "load more".
   const hasMore = visibleCount < projects.length;
 
   return (
@@ -22,11 +23,11 @@ export default function Projects() {
         </div>
 
         <div ref={listRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {displayedProjects.map((project, index) => (
-            <div
+          {projects.map((project, index) => (
+            <article
               key={project.title}
-              className={`hacker-card group flex flex-col h-full anim-hidden anim-scale ${listVisible ? 'anim-visible' : ''}`}
-              style={{ transitionDelay: `${index * 80}ms` }}
+              className={`hacker-card group flex-col h-full anim-hidden anim-scale ${listVisible ? 'anim-visible' : ''} ${index >= visibleCount ? 'hidden' : 'flex'}`}
+              style={{ transitionDelay: `${(index % 4) * 80}ms` }}
             >
               <div className="flex items-center gap-2 px-5 py-3 border-b border-[#0fa]/10 bg-[#0fa]/5">
                 <div className="flex gap-1.5">
@@ -35,21 +36,34 @@ export default function Projects() {
                   <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
                 </div>
                 <span className="font-mono text-[10px] text-[#0fa]/50 ml-2 hidden sm:inline">
-                  ~/projects/{(project as { slug?: string }).slug ?? project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
+                  ~/projects/{project.slug ?? project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
                 </span>
                  <span className="font-mono text-[10px] text-[#0fa]/50 ml-2 sm:hidden">
-                  {(project as { slug?: string }).slug ?? project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
+                  {project.slug ?? project.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}
                 </span>
                 <div className="ml-auto flex gap-2">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 text-gray-500 hover:text-[#0fa] transition-colors"
-                    aria-label={`View ${project.title} on GitHub`}
-                  >
-                    <Github className="w-4 h-4" aria-hidden="true" />
-                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 text-gray-500 hover:text-[#0fa] transition-colors"
+                      aria-label={`View ${project.title} source code on GitHub`}
+                    >
+                      <Github className="w-4 h-4" aria-hidden="true" />
+                    </a>
+                  )}
+                  {project.writeup && (
+                    <a
+                      href={project.writeup}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 text-gray-500 hover:text-[#0fa] transition-colors"
+                      aria-label={`Read the ${project.title} write-up`}
+                    >
+                      <FileText className="w-4 h-4" aria-hidden="true" />
+                    </a>
+                  )}
                   {project.live && (
                     <a
                       href={project.live}
@@ -93,7 +107,7 @@ export default function Projects() {
                   ))}
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
@@ -111,7 +125,7 @@ export default function Projects() {
             </button>
           ) : (
             <button
-              onClick={() => setVisibleCount(2)}
+              onClick={() => setVisibleCount(4)}
               className="group relative inline-flex items-center gap-2 px-8 py-3 bg-[#0fa]/5 border border-[#0fa]/20 text-[#0fa] font-mono text-sm hover:bg-[#0fa]/10 hover:border-[#0fa]/50 transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">

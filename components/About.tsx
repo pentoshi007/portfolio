@@ -20,24 +20,25 @@ export default function About() {
         <div className="grid lg:grid-cols-5 gap-8">
           <div ref={contentRef as React.RefObject<HTMLDivElement>} className={`lg:col-span-3 space-y-6 anim-hidden anim-slide-up ${contentVisible ? 'anim-visible' : ''}`}>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Full-stack developer with a passion for cybersecurity. I enjoy building efficient, 
-              scalable applications while ensuring they remain secure against modern threats.
+              I&apos;m Aniket Pandey, a full-stack developer and cybersecurity analyst. I build
+              MERN and Next.js applications, from microservices to AI-powered tools, and secure
+              them with the same mindset I use for SOC work and penetration testing.
             </p>
 
             <p className="text-gray-400 leading-relaxed">
-              My journey started with web development and evolved through CTFs, teaching me 
-              to think like an attacker to build better defenses. I strive to create software 
-              that is not just functional, but fundamentally secure.
+              I created clai, an open-source AI coding and pentesting CLI with 100k+ npm downloads,
+              built a cloud SOC on Microsoft Sentinel, and rank in the top 1% on TryHackMe.
+              Thinking like an attacker helps me build better defenses.
             </p>
 
             <div className="pt-6 border-t border-[#0fa]/10">
               <p className="font-mono text-sm text-gray-400 mb-4">$ cat /proc/stats</p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { num: '8+', label: 'apps shipped' },
-                  { num: '200+', label: 'CTF solves' },
+                  { num: '100k+', label: 'npm downloads' },
+                  { num: '300+', label: 'security labs' },
                   { num: 'Top 1%', label: 'TryHackMe' },
-                  { num: '75%', label: 'time saved' },
+                  { num: '2', label: 'internships' },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center p-4 border border-[#0fa]/10 hover:border-[#0fa]/30 transition-colors">
                     <div className="text-2xl font-bold neon-text">{stat.num}</div>

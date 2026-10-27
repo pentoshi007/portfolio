@@ -4,20 +4,20 @@ import { useState, useEffect } from 'react';
 
 const typingLines = [
   '> initializing system...',
-  '> loading modules: [react, nextjs, node, nmap, burp]',
+  '> loading modules: [react, nextjs, node, sentinel, burp]',
   '> establishing secure connection...',
   '> access granted.',
   '',
   '> cat /etc/profile',
   'ROLE="Full-Stack Developer + Security Analyst"',
-  'LOCATION="New Delhi, India"',
+  'LOCATION="Buxar, Bihar, India"',
   'STATUS="Available for opportunities"',
   '',
   '> ./achievements --list',
-  '[+] 8+ production apps deployed',
+  '[+] clai: 100k+ npm downloads',
   '[+] Top 1% on TryHackMe',
-  '[+] 200+ CTF challenges pwned',
-  '[+] 20+ secure API endpoints built',
+  '[+] 300+ hands-on security labs',
+  '[+] Cloud SOC on Microsoft Sentinel',
 ];
 
 const getLineStyle = (line: string) => {

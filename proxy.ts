@@ -83,6 +83,7 @@ export default function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/static') ||
+    pathname.startsWith('/apple-icon') ||
     (pathname.includes('.') && !pathname.startsWith('/api') && !isMetadataPath)
   ) {
     return NextResponse.next();
